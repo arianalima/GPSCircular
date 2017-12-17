@@ -22,8 +22,8 @@ WiFiClient espClient;
 PubSubClient client(espClient);
 
 //Parametros Wi-Fi
-const char* ssid = "GVT-2DF0"; //Nome da rede
-const char* password = "J533141735"; //Senha da Rede
+const char* ssid = ""; //Nome da rede
+const char* password = ""; //Senha da Rede
  
 //Parametros MQTT
 const char* mqtt_server = "m14.cloudmqtt.com"; //server MQTT
