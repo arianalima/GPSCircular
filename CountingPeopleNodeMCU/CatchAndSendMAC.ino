@@ -1,7 +1,4 @@
-//WP MAC: 60:7e:dd:7e:f3:c8
-//Iphone MAC: f0:db:f8:a6:44:38
-//TV MAC? c4:57:6e:6d:8c:5e
-//android bernardo: 08:62:66:38:61:5d
+
 
 extern "C" {
   #include <user_interface.h>
