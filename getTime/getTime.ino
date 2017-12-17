@@ -1,8 +1,8 @@
 #include <ESP8266WiFi.h>
 #include <time.h>
 
-const char* ssid = "GVT-BBB7";
-const char* password = "5067015358";
+const char* ssid = "....";
+const char* password = "....";
 
 int timezone = -3;
 int dst = 0;
