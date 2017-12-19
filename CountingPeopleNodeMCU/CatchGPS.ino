@@ -7,8 +7,8 @@ TinyGPS gps;
 // criando WiFiClient
 WiFiClient espClient;
 // parametros WiFI
-const char* ssid = "Biometria II";
-const char* password = "biometria0209";
+const char* ssid = "";
+const char* password = "";
 // string do json
 char json[250];
 
