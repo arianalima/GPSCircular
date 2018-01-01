@@ -1,5 +1,4 @@
 import pymongo
-import time
 
 HOST = "127.0.0.1"
 PORTA = 27017

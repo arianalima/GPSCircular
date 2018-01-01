@@ -1,5 +1,5 @@
 #!flask/bin/python
-import six
+
 import os
 from flask import Flask, jsonify, make_response
 

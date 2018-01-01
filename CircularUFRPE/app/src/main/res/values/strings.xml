@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">CircularUFRPE</string>
+    <string name="title_activity_home">CircularUFRPE</string>
+
+    <string name="txt_posicao_autal">Posição Atual</string>
+    <string name="txt_lotacao">Lotação</string>
+    <string name="txt_posicao_default">Desconhecida</string>
+</resources>
