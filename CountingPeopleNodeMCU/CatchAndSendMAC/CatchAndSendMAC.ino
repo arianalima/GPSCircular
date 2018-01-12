@@ -12,6 +12,7 @@ extern "C" {
 
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
+#include <time.h>
 
 //Criando WIFIClient
 WiFiClient espClient;
@@ -19,9 +20,15 @@ WiFiClient espClient;
 //Criando o clientMQTT com o wificlient
 PubSubClient client(espClient);
 
+//Parametros time_stamp
+int timezone = -3;
+int dst = 0;
+
+time_t now;
+
 //Parametros Wi-Fi
-const char* ssid = ""; //Nome da rede
-const char* password = ""; //Senha da Rede
+const char* ssid = "GVT-BBB7"; //Nome da rede
+const char* password = "5067015358"; //Senha da Rede
  
 //Parametros MQTT
 const char* mqtt_server = "m11.cloudmqtt.com"; //server MQTT
@@ -33,6 +40,8 @@ const char* x = "w9GlazqdKUqs";
 
 int contador;
 char addr[] = "00:00:00:00:00:00";
+char mensagem[100][50];
+int contador_mensagems = 0;
 
 struct RxControl {
  signed rssi:8; // signal intensity of packet
@@ -86,10 +95,11 @@ static void showMetadata(SnifferPacket *snifferPacket) {
         return;
 
   Serial.print("RSSI: ");
+  int sinal = snifferPacket->rx_ctrl.rssi;
   Serial.print(snifferPacket->rx_ctrl.rssi, DEC);
 
-  Serial.print(" Ch: ");
-  Serial.print(wifi_get_channel());
+  //Serial.print(" Ch: ");
+  //Serial.print(wifi_get_channel());
 
   
   getMAC(addr, snifferPacket->data, 10);
@@ -100,6 +110,14 @@ static void showMetadata(SnifferPacket *snifferPacket) {
   Serial.print(" SSID: ");
   printDataSpan(26, SSID_length, snifferPacket->data);
 
+  now = time(nullptr);
+
+  char mensagem[33];
+//  sprintf(mensagem, "%d %d", sinal, now);
+  sprintf(mensagem, "%c %d %d", addr, sinal, now);
+  Serial.println();
+//  Serial.print(addr);
+  Serial.print(mensagem);
   Serial.println();
 }
 
@@ -199,13 +217,25 @@ void conectMqtt() {
   }
 }
 
+void setup_time(){
+  configTime(timezone * 3600, 0, "pool.ntp.org", "time.nist.gov");
+  Serial.println("\nWaiting for time");
+  while (!time(nullptr)) {
+    Serial.print(".");
+    delay(1000);
+  }
+  Serial.println("");
+}
+
 
 void sendMessage(String m){
 
   char addr[] = "00:00:00:00:00:00";
   getMAC(addr, snifferP->data, 10);
 
-  String mensagem = "{'mac':" + m + ",'hora':" +  + "}";
+  now = time(nullptr);
+
+  String mensagem = "{'mac':" + m + ",'time':" + now + "}";
 
   // Transformando a String em char para poder publicar no mqtt
   char charpub[mensagem.length() + 1];
@@ -221,6 +251,8 @@ void sendMessage(String m){
 void setup() {
   // set the WiFi chip to "promiscuous" mode aka monitor mode
   Serial.begin(115200);
+  setup_wifi();
+  setup_time();
   delay(10);
   wifi_set_opmode(STATION_MODE);
   wifi_set_channel(1);
