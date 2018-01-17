@@ -1,8 +1,8 @@
 #include <ESP8266WiFi.h>
 #include <time.h>
 
-const char* ssid = "....";
-const char* password = "....";
+const char* ssid = "GVT-BBB7";
+const char* password = "5067015358";
 
 int timezone = -3;
 int dst = 0;
@@ -30,6 +30,6 @@ void setup() {
 
 void loop() {
   time_t now = time(nullptr);
-  Serial.println(ctime(&now));
+  Serial.println(now);
   delay(10000);
 }

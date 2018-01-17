@@ -28,11 +28,11 @@ def get_home():
 
 @app.route('/circular/get/localizacao', methods=['GET'])
 def get_posicao():
-    return jsonify({'result': "posicao 123097128037182093"})
+    return jsonify({'resultado': "posicao 1230971280 37182093"})
 
 @app.route('/circular/get/lotacao', methods=['GET'])
 def get_lotacao():
-    return jsonify({'result': "tem 123097128037182093 pessoas"})
+    return jsonify({'resultado': "tem 123097128037182093 pessoas"})
 
 
 if __name__ == '__main__':

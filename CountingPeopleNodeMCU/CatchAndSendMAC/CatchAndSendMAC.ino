@@ -40,8 +40,8 @@ const char* x = "w9GlazqdKUqs";
 
 int contador;
 char addr[] = "00:00:00:00:00:00";
-char mensagem[100][50];
-int contador_mensagems = 0;
+char mensagens[100][32];
+int contador_mensagens = 0;
 
 struct RxControl {
  signed rssi:8; // signal intensity of packet
@@ -94,31 +94,34 @@ static void showMetadata(SnifferPacket *snifferPacket) {
       frameSubType != SUBTYPE_PROBE_REQUEST)
         return;
 
-  Serial.print("RSSI: ");
+//  Serial.print("RSSI: ");
   int sinal = snifferPacket->rx_ctrl.rssi;
-  Serial.print(snifferPacket->rx_ctrl.rssi, DEC);
+//  Serial.print(snifferPacket->rx_ctrl.rssi, DEC);
 
   //Serial.print(" Ch: ");
   //Serial.print(wifi_get_channel());
 
   
   getMAC(addr, snifferPacket->data, 10);
-  Serial.print(" Peer MAC: ");
-  Serial.print(addr);
+//  Serial.print(" Peer MAC: ");
+//  Serial.print(addr);
 
-  uint8_t SSID_length = snifferPacket->data[25];
-  Serial.print(" SSID: ");
-  printDataSpan(26, SSID_length, snifferPacket->data);
+//  uint8_t SSID_length = snifferPacket->data[25];
+//  Serial.print(" SSID: ");
+//  printDataSpan(26, SSID_length, snifferPacket->data);
 
   now = time(nullptr);
 
-  char mensagem[33];
-//  sprintf(mensagem, "%d %d", sinal, now);
-  sprintf(mensagem, "%c %d %d", addr, sinal, now);
+  char texto[32];
+  sprintf(texto, "%s %d %d", addr, sinal, now);
   Serial.println();
-//  Serial.print(addr);
-  Serial.print(mensagem);
+  Serial.print(texto);
   Serial.println();
+  for (int j = 0; j < 32;j++){
+    mensagens[contador_mensagens][j] = texto[j];
+  }
+  
+  contador_mensagens ++;
 }
 
 /**
@@ -160,7 +163,9 @@ static os_timer_t channelHop_timer;
     
     if (!client.connected()) {
         conectMqtt();
-        sendMessage(addr);
+        sendMessages(mensagens, contador_mensagens);
+//        sendMessage(addr);
+        contador_mensagens = 0;
     }
         
     wifi_promiscuous_enable(ENABLE);
@@ -228,23 +233,39 @@ void setup_time(){
 }
 
 
-void sendMessage(String m){
+//void sendMessage(String m){
+//
+//  char addr[] = "00:00:00:00:00:00";
+//  getMAC(addr, snifferP->data, 10);
+//
+//  now = time(nullptr);
+//
+//  String mensagem = "{'mac':" + m + ",'time':" + now + "}";
+//
+//  // Transformando a String em char para poder publicar no mqtt
+//  char charpub[mensagem.length() + 1];
+//  mensagem.toCharArray(charpub, mensagem.length()+1);
+//  Serial.print(mensagem);
+//  client.publish("retorno", charpub);  
+//  
+//  Serial.println();
+//}
 
-  char addr[] = "00:00:00:00:00:00";
-  getMAC(addr, snifferP->data, 10);
-
-  now = time(nullptr);
-
-  String mensagem = "{'mac':" + m + ",'time':" + now + "}";
-
-  // Transformando a String em char para poder publicar no mqtt
-  char charpub[mensagem.length() + 1];
-  mensagem.toCharArray(charpub, mensagem.length()+1);
-  Serial.print(mensagem);
-  client.publish("retorno", charpub);  
-  
-  Serial.println();
+void sendMessages(char lista[100][32], int valorMax){
+  char message[32];
+  for(int i = 0; i < valorMax; i++){
+    Serial.println(lista[i]);
+    for (int j = 0; j < 32; j++){
+      message[j] = lista[i][j];
+    }
+    
+    client.publish("retorno", message);
+    Serial.print("Era para ter ido: ");
+    Serial.print(message);
+    Serial.println();
+ }
 }
+
 
 /////////////////////////////////////////////
 

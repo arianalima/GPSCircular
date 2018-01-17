@@ -51,14 +51,14 @@ mqttc.on_publish = on_publish
 
 
 # Connect
-mqttc.username_pw_set("tjyrpcmw", "w9GlazqdKUqs")
-mqttc.connect("m11.cloudmqtt.com" , 10443)
+mqttc.username_pw_set("ghtlctrw", "ZgcI4qgFIaNX")
+mqttc.connect("m13.cloudmqtt.com" , 16376)
 
 # Start subscribe, with QoS level 0
 mqttc.subscribe("retorno", 0)
 
 # Publish a message
-mqttc.publish("retorno", "my message")
+# mqttc.publish("retorno", "my message")
 
 # Continue the network loop, exit when an error occurs
 rc = 0
