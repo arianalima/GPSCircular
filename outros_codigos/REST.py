@@ -36,4 +36,4 @@ def get_lotacao():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True,host= '192.168.25.50')

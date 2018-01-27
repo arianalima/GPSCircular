@@ -107,3 +107,5 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+outros_codigos/venv/
+outros_codigos/.idea/workspace.xml
