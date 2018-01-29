@@ -31,12 +31,12 @@ const char* ssid = "GVT-BBB7"; //Nome da rede
 const char* password = "5067015358"; //Senha da Rede
  
 //Parametros MQTT
-const char* mqtt_server = "m11.cloudmqtt.com"; //server MQTT
-const int mqtt_port = 10443; //Porta MQTT
+const char* mqtt_server = "192.168.25.50"; //server MQTT
+const int mqtt_port = 1883; //Porta MQTT
 
 //rabbit User and pass parametros.
-const char* user = "  tjyrpcmw";
-const char* x = "w9GlazqdKUqs";
+const char* user = "psd";
+const char* senha = "psd";
 
 int contador;
 char addr[] = "00:00:00:00:00:00";
@@ -113,10 +113,8 @@ static void showMetadata(SnifferPacket *snifferPacket) {
   now = time(nullptr);
 
   char texto[32];
-  sprintf(texto, "%s %d %d", addr, sinal, now);
-  Serial.println();
-  Serial.print(texto);
-  Serial.println();
+  sprintf(texto, "%s %d %d", addr, sinal, now);  
+  Serial.println(texto);
   for (int j = 0; j < 32;j++){
     mensagens[contador_mensagens][j] = texto[j];
   }
@@ -208,7 +206,7 @@ void conectMqtt() {
   while (!client.connected()) {    
     Serial.print("ConectandoMQTT ...");    
     
-    if (client.connect("MACteste","tjyrpcmw","w9GlazqdKUqs")) {
+    if (client.connect("MACteste",user,senha)) {
       Serial.println("Conectado");
       
     } else {
@@ -252,14 +250,14 @@ void setup_time(){
 //}
 
 void sendMessages(char lista[100][32], int valorMax){
-  char message[32];
+  char message[33];
+  message[33] = '\0';
   for(int i = 0; i < valorMax; i++){
-    Serial.println(lista[i]);
     for (int j = 0; j < 32; j++){
       message[j] = lista[i][j];
     }
     
-    client.publish("retorno", message);
+    client.publish("hello", message);
     Serial.print("Era para ter ido: ");
     Serial.print(message);
     Serial.println();
