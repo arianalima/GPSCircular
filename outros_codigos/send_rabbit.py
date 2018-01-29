@@ -1,9 +1,15 @@
 from threading import Thread
 import time
+import paho.mqtt.client as mqtt
+
+mqttc = mqtt.Client()
+mqttc.username_pw_set("psd", "psd")
+mqttc.connect("192.168.48.1", 1883)
+
 
 dicionario_segundos = {}
 
-with open("contagem.txt") as arquivo:
+with open("coleta1.txt") as arquivo:
     for linha in arquivo:
         timestamp = int(linha.split(" ")[2])
         mac = linha.split(" ")[0]
@@ -19,7 +25,9 @@ timestamp_atual = 1516185697
 def worker(timestamp):
     if timestamp in dicionario_segundos.keys():
         lista = dicionario_segundos[timestamp]
-        print("macs {}".format(lista))
+        for i in lista:
+            mqttc.publish("hello", "{} {} {}p".format(i,rssi,timestamp))
+            print("mandei {} -99 {}p".format(i,timestamp))
 
 while True:
     agora = time.time()
@@ -34,10 +42,3 @@ while True:
         print("------------------------------------------")
         print("------------------------------------------")
         break
-
-
-
-
-
-
-
