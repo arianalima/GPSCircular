@@ -51,13 +51,22 @@ if __name__ == "__main__":
 
     
     #linhas = lines.filter(lambda lines: lines.split("\n"))
+    
+    def reduceTupla(t1,t2):
+        ts1 = t1[1]
+        ts2 = t2[1]
+        if ts1 >= ts2:
+            return t1
+        else:
+            return t2
+    
     linhas = lines.map(lambda line: line.split(" "))\
-                .map(lambda line: (line[0],int(line[2][:-1])))\
-                .reduceByKey(lambda ts1, ts2: max(ts1,ts2))
+                .map(lambda line: (line[0],(line[1],int(line[2][:-1]))))\
+                .reduceByKey(reduceTupla)
                 
     def send(message):
-        txt_message = str(message[0]) + "%20" + str(message[1])
-        urllib2.urlopen("http://192.168.48.1:5000/todo/api/v1.0/circular/" + txt_message).read()
+        txt_message = str(message[0]) +"%20"+ str(message[1][0]) +"%20"+ str(message[1][1])
+        urllib2.urlopen("http://192.168.48.1:5000/circular/" + txt_message).read()
         print(message)
         
     linhas.foreachRDD(lambda p: p.foreach(send))
