@@ -1,0 +1,123 @@
+#!flask/bin/python
+from flask import Flask, jsonify, abort
+import time
+from threading import Thread, Lock
+
+class Mac():
+    def __init__(self, mac, sinal, time_stamp_ativo, time_stamp_presente, flag):
+        self.mac = mac
+        self.sinal = sinal
+        self.time_stamp_ativo = time_stamp_ativo
+        self.time_stamp_presente = time_stamp_presente
+        self.flag = flag
+
+    def adicionar_em_dicionario(self, dicionario):
+        dicionario[self.mac] = self
+
+    def atualizar_dicionario(self, dicionario):
+        dicionario[self.mac].time_stamp_ativo = self.time_stamp_ativo
+
+mutex_dicionario = Lock()
+
+macs_unfiltered = {}
+macs_90 = {}
+macs_150 = {}
+macs_180 = {}
+
+# flag: p de presente, a ativo
+# mac_exemplo = {"mac":"12:55:d4:66:88", "sinal":-50, "time_stamp_ativo":1212333456787, "time_stamp_presente":1212333456789, "flag":"p"}
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return "Hello, World!"
+
+
+
+@app.route('/circular/<string:novo_mac>', methods=['GET'])
+def get_task(novo_mac):
+    if len(novo_mac) == 0:
+        abort(404)
+    print("novo MAC recebido : {}".format(novo_mac))
+    conta(novo_mac)
+    return jsonify({'ok': "mac-recebido"})
+
+
+def conta(mensagem):
+    mensagem = mensagem.split(" ")
+    mac = mensagem[0]
+    sinal = mensagem[1]
+    time_stamp = mensagem[2]
+    mac_n = Mac(mac,sinal,time_stamp,time_stamp,"p")
+    # Thread(target=gateway, args=[mac_n, macs_unfiltered])
+    Thread(target=gateway, args=[mac_n, macs_90])
+    # gateway(mac_n, macs_90)
+    # gateway(mac_n, macs_150)
+    # gateway(mac_n, macs_180)
+
+def gateway(objeto_mac, dicionario, mutex):
+    mutex.aquire()
+    try:      
+        if objeto_mac.mac not in dicionario.keys():
+            objeto_mac.adicionar_em_dicionario(dicionario)
+            print("adicionou mac {} em um dicionario".format(objeto_mac.mac))
+        else:
+            objeto_mac.atualizar_dicionario(dicionario)
+    finally:
+        mutex.release()
+
+
+def worker(timestamp, dicionario, tempo_vida_ativo, tempo_vida_presente = 60):
+    timestp_ativo_final = timestamp + tempo_vida_ativo
+    dicionario_keys = []
+    for j in dicionario.keys():
+        dicionario_keys.append(j)
+
+    for i in dicionario_keys:
+        if (int(dicionario[i].time_stamp_ativo) + tempo_vida_ativo) < timestamp:
+            #del dicionario[i]
+            pass
+        elif int(dicionario[i].time_stamp_presente) >= (timestamp + tempo_vida_presente):
+            dicionario[i].time_stamp_ativo = int(timestamp)
+        else:
+            dicionario[i].flag = "a"
+            dicionario[i].time_stamp_ativo = timestamp
+    arquivo = open("log_dicionario" + str(tempo_vida_ativo) + ".txt","a")
+    arquivo.write(str(timestamp) + " " + str(len(dicionario.keys())) + "\n")
+    arquivo.close()
+
+
+def sub_main_thread(dict_unfiltered, dict_90, dict_150, dict_180, mutex):
+    timestamp_atual = 1516185697
+
+    while True:
+        antes = time.time()
+        mutex.aquire()
+        try:
+            worker(timestamp_atual, dict_90, 90)
+        finally:
+            mutex.release()
+        agora = time.time()
+        time.sleep((antes + 1) - agora)
+        # if int(agora) == int(antes) + 1:
+        #     antes = time.time()
+        #     # Thread(target=worker, args=[timestamp_atual, dict_unfiltered, 99999]).start()
+        #     # Thread(target=worker, args=[timestamp_atual, dict_90, 90]).start()
+        #     # Thread(target=worker, args=[timestamp_atual, dict_150, 150]).start()
+        #     # Thread(target=worker, args=[timestamp_atual, dict_180, 180]).start()
+        timestamp_atual += 1
+        # elif int(agora) > int(antes) +1:
+        #     print("------------------------------------------")
+        #     print("------------------------------------------")
+        #     print("lentidão no processamento")
+        #     print("------------------------------------------")
+        #     print("------------------------------------------")
+        #     break
+
+
+if __name__ == '__main__':
+    Thread(target=sub_main_thread,args=[macs_unfiltered, macs_90, macs_150, macs_180, mutex_dicionario]).start()
+    app.run(debug=True,host="0.0.0.0")
+
+
