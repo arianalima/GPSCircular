@@ -65,9 +65,13 @@ if __name__ == "__main__":
                 .reduceByKey(reduceTupla)
                 
     def send(message):
-        txt_message = str(message[0]) +"%20"+ str(message[1][0]) +"%20"+ str(message[1][1])
-        urllib2.urlopen("http://192.168.48.1:5000/circular/" + txt_message).read()
-        print(message)
+        try:
+            txt_message = str(message[0]) +"%20"+ str(message[1][0]) +"%20"+ str(message[1][1])
+            urllib2.urlopen("http://10.246.42.39:5000/circular/" + txt_message).read()
+            print(message)
+        except:
+            print"HTPP error"
+    
         
     linhas.foreachRDD(lambda p: p.foreach(send))
     #counts.pprint()
