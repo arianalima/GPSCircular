@@ -2,6 +2,7 @@
 from flask import Flask, jsonify, abort
 import time
 from threading import Thread, Lock
+import urllib.request
 
 class Mac():
     def __init__(self, mac, sinal, time_stamp_ativo, time_stamp_presente, flag):
@@ -19,10 +20,7 @@ class Mac():
 
 mutex_dicionario = Lock()
 
-macs_unfiltered = {}
-macs_90 = {}
-macs_150 = {}
-macs_180 = {}
+macs = {}
 
 # flag: p de presente, a ativo
 # mac_exemplo = {"mac":"12:55:d4:66:88", "sinal":-50, "time_stamp_ativo":1212333456787, "time_stamp_presente":1212333456789, "flag":"p"}
@@ -31,7 +29,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return "Hello, World!"
+    return "Service Funcionando!"
 
 
 
@@ -40,8 +38,14 @@ def get_task(novo_mac):
     if len(novo_mac) == 0:
         abort(404)
     print("novo MAC recebido : {}".format(novo_mac))
-    conta(novo_mac)
+    # conta(novo_mac)
+    send_mac(novo_mac)
     return jsonify({'ok': "mac-recebido"})
+
+
+def send_mac(mensagem):
+    mensagem = mensagem.replace(" ","%20")
+    content = urllib.request.urlopen("http://192.168.25.50:5001/add-mac/" + mensagem).read()
 
 
 def conta(mensagem):
@@ -51,13 +55,11 @@ def conta(mensagem):
     time_stamp = mensagem[2]
     mac_n = Mac(mac,sinal,time_stamp,time_stamp,"p")
     # Thread(target=gateway, args=[mac_n, macs_unfiltered])
-    Thread(target=gateway, args=[mac_n, macs_90])
-    # gateway(mac_n, macs_90)
-    # gateway(mac_n, macs_150)
-    # gateway(mac_n, macs_180)
+    Thread(target=gateway, args=[mac_n, macs])
+
 
 def gateway(objeto_mac, dicionario, mutex):
-    mutex.aquire()
+    mutex.acquire()
     try:      
         if objeto_mac.mac not in dicionario.keys():
             objeto_mac.adicionar_em_dicionario(dicionario)
@@ -88,14 +90,14 @@ def worker(timestamp, dicionario, tempo_vida_ativo, tempo_vida_presente = 60):
     arquivo.close()
 
 
-def sub_main_thread(dict_unfiltered, dict_90, dict_150, dict_180, mutex):
+def sub_main_thread(dict, mutex):
     timestamp_atual = 1516185697
 
     while True:
         antes = time.time()
-        mutex.aquire()
+        mutex.acquire()
         try:
-            worker(timestamp_atual, dict_90, 90)
+            worker(timestamp_atual, dict, 90)
         finally:
             mutex.release()
         agora = time.time()
@@ -103,21 +105,11 @@ def sub_main_thread(dict_unfiltered, dict_90, dict_150, dict_180, mutex):
         # if int(agora) == int(antes) + 1:
         #     antes = time.time()
         #     # Thread(target=worker, args=[timestamp_atual, dict_unfiltered, 99999]).start()
-        #     # Thread(target=worker, args=[timestamp_atual, dict_90, 90]).start()
-        #     # Thread(target=worker, args=[timestamp_atual, dict_150, 150]).start()
-        #     # Thread(target=worker, args=[timestamp_atual, dict_180, 180]).start()
         timestamp_atual += 1
-        # elif int(agora) > int(antes) +1:
-        #     print("------------------------------------------")
-        #     print("------------------------------------------")
-        #     print("lentidão no processamento")
-        #     print("------------------------------------------")
-        #     print("------------------------------------------")
-        #     break
 
 
 if __name__ == '__main__':
-    Thread(target=sub_main_thread,args=[macs_unfiltered, macs_90, macs_150, macs_180, mutex_dicionario]).start()
-    app.run(debug=True,host="0.0.0.0")
+    Thread(target=sub_main_thread,args=[macs, mutex_dicionario]).start()
+    app.run(debug=True,host="0.0.0.0",port=5000)
 
 
