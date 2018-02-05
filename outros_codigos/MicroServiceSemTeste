@@ -3,6 +3,11 @@ from flask import Flask, jsonify, abort
 import time
 from threading import Thread, Lock
 import urllib.request
+import ntplib
+
+
+ntp = ntplib.NTPClient()
+
 
 class Mac():
     def __init__(self, mac, sinal, time_stamp_ativo, time_stamp_presente, flag):
@@ -18,12 +23,10 @@ class Mac():
     def atualizar_dicionario(self, dicionario):
         dicionario[self.mac].time_stamp_ativo = self.time_stamp_ativo
 
+
 mutex_dicionario = Lock()
 
 macs = {}
-
-# flag: p de presente, a ativo
-# mac_exemplo = {"mac":"12:55:d4:66:88", "sinal":-50, "time_stamp_ativo":1212333456787, "time_stamp_presente":1212333456789, "flag":"p"}
 
 app = Flask(__name__)
 
@@ -32,14 +35,14 @@ def index():
     return "Service Funcionando!"
 
 
-
 @app.route('/circular/<string:novo_mac>', methods=['GET'])
 def get_task(novo_mac):
     if len(novo_mac) == 0:
         abort(404)
+    print(novo_mac)
     print("novo MAC recebido : {}".format(novo_mac))
-    # conta(novo_mac)
-    send_mac(novo_mac)
+    #Thread(target=send_mac, args=[novo_mac]).start()
+    conta(novo_mac)
     return jsonify({'ok': "mac-recebido"})
 
 
@@ -47,6 +50,7 @@ def send_mac(mensagem):
     mensagem = mensagem.replace(" ","%20")
     content = urllib.request.urlopen("http://192.168.25.50:5001/add-mac/" + mensagem).read()
 
+cache_gateway = []
 
 def conta(mensagem):
     mensagem = mensagem.split(" ")
@@ -54,62 +58,90 @@ def conta(mensagem):
     sinal = mensagem[1]
     time_stamp = mensagem[2]
     mac_n = Mac(mac,sinal,time_stamp,time_stamp,"p")
-    # Thread(target=gateway, args=[mac_n, macs_unfiltered])
-    Thread(target=gateway, args=[mac_n, macs])
+    #Thread(target=gateway, args=[mac_n, macs])
 
 
 def gateway(objeto_mac, dicionario, mutex):
-    mutex.acquire()
-    try:      
-        if objeto_mac.mac not in dicionario.keys():
-            objeto_mac.adicionar_em_dicionario(dicionario)
-            print("adicionou mac {} em um dicionario".format(objeto_mac.mac))
-        else:
-            objeto_mac.atualizar_dicionario(dicionario)
-    finally:
-        mutex.release()
+    if mutex.locked():
+        cache_gateway.append(objeto_mac)
+    else:
+        mutex.acquire()
+        try:
+            for i in cache_gateway:
+                dicionario_funcoes(i,dicionario)
+            cache_gateway.clear()
+            dicionario_funcoes(objeto_mac,dicionario)
+        finally:
+            mutex.release()
+
+
+
+def dicionario_funcoes(objeto_mac,dicionario):
+    if objeto_mac.mac not in dicionario.keys():
+        objeto_mac.adicionar_em_dicionario(dicionario)
+        print("adicionou mac {} em um dicionario".format(objeto_mac.mac))
+    else:
+        objeto_mac.atualizar_dicionario(dicionario)
+
 
 
 def worker(timestamp, dicionario, tempo_vida_ativo, tempo_vida_presente = 60):
-    timestp_ativo_final = timestamp + tempo_vida_ativo
     dicionario_keys = []
     for j in dicionario.keys():
         dicionario_keys.append(j)
-
     for i in dicionario_keys:
         if (int(dicionario[i].time_stamp_ativo) + tempo_vida_ativo) < timestamp:
-            #del dicionario[i]
-            pass
-        elif int(dicionario[i].time_stamp_presente) >= (timestamp + tempo_vida_presente):
-            dicionario[i].time_stamp_ativo = int(timestamp)
-        else:
+            del dicionario[i]
+        elif int(dicionario[i].time_stamp_presente + tempo_vida_presente) < timestamp:
             dicionario[i].flag = "a"
-            dicionario[i].time_stamp_ativo = timestamp
-    arquivo = open("log_dicionario" + str(tempo_vida_ativo) + ".txt","a")
-    arquivo.write(str(timestamp) + " " + str(len(dicionario.keys())) + "\n")
-    arquivo.close()
 
 
-def sub_main_thread(dict, mutex):
-    timestamp_atual = 1516185697
+def sub_main_thread(dict, mutex, tempo_atual):
+    timestamp_atual = tempo_atual
 
     while True:
         antes = time.time()
-        mutex.acquire()
-        try:
-            worker(timestamp_atual, dict, 90)
-        finally:
-            mutex.release()
+        if mutex.acquire():
+            try:
+                worker(timestamp_atual, dict, 90)
+            finally:
+                mutex.release()
         agora = time.time()
         time.sleep((antes + 1) - agora)
-        # if int(agora) == int(antes) + 1:
-        #     antes = time.time()
-        #     # Thread(target=worker, args=[timestamp_atual, dict_unfiltered, 99999]).start()
         timestamp_atual += 1
 
 
+###Não sei porque não funcionou
+# class Time():
+#     def __init__(self):
+#         ntp = ntplib.NTPClient()
+#         resposta = ntp.request("pool.ntp.org")
+#         self.__time = int(resposta.recv_time)
+#         Thread(target=self.loop()).start()
+#
+#     def loop(self):
+#         antes = time.time()
+#         while True:
+#             agora = time.time()
+#             if int(agora) == int(antes) + 1:
+#                 antes = time.time()
+#                 self.__time += 1
+#                 # print(self.__time)
+#
+#     def __repr__(self):
+#         return self.__time
+
+
+
+
+
+
+
 if __name__ == '__main__':
-    Thread(target=sub_main_thread,args=[macs, mutex_dicionario]).start()
+    resposta = ntp.request("pool.ntp.org")
+    hora_atual = int(resposta.recv_time)
+    #Thread(target=sub_main_thread,args=[macs, mutex_dicionario, hora_atual]).start()
+    # hora_atual = Time()
     app.run(debug=True,host="0.0.0.0",port=5000)
 
 
