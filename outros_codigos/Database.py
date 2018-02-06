@@ -5,7 +5,8 @@ def executa_SQL(pSQL, cursor, db):
         cursor.execute(pSQL)
         db.commit()
         return True
-    except:
+    except Exception as e:
+        print(e)
         print("Error: Não foi possível executar o SQL")
         db.rollback()
 
@@ -23,8 +24,11 @@ def criarTabelas(cursor, db):
     tabelaPessoa = "CREATE TABLE IF NOT EXISTS PESSOA (ID INT NOT NULL AUTO_INCREMENT, MAC VARCHAR(17) NULL, SINAL INT NULL, TIMESTAMP INT NULL, PRIMARY KEY (ID) ) ENGINE=InnoDB"
     executa_SQL(tabelaPessoa, cursor, db)
 
-    tabelaCircular = "CREATE TABLE IF NOT EXISTS CIRCULAR (ID INT NOT NULL AUTO_INCREMENT, IDNODE INT NOT NULL, LOTACAO INT NULL, LATITUDE DOUBLE NULL, LONGITUDE DOUBLE NULL, TIMESTAMP INT NULL, PRIMARY KEY (ID) ) ENGINE=InnoDB"
-    executa_SQL(tabelaCircular, cursor, db)
+    tabelaLocalizacao = "CREATE TABLE IF NOT EXISTS LOCALIZACAO (ID INT NOT NULL AUTO_INCREMENT, IDNODE INT NOT NULL, LATITUDE DOUBLE NULL, LONGITUDE DOUBLE NULL, TIMESTAMP INT NULL, PRIMARY KEY (ID) ) ENGINE=InnoDB"
+    executa_SQL(tabelaLocalizacao, cursor, db)
+
+    tabelaLotacao = "CREATE TABLE IF NOT EXISTS LOTACAO (ID INT NOT NULL AUTO_INCREMENT, LOTACAO INT NULL, TIMESTAMP INT NULL, PRIMARY KEY (ID) ) ENGINE=InnoDB"
+    executa_SQL(tabelaLotacao, cursor, db)
 
 def inicializarBanco(servidor='127.0.0.1', usuario='root',senha=''):
     try:
@@ -53,13 +57,22 @@ def inserirPessoa(mac, sinal, timestamp):
     else:
         return ("Não foi possível inserir a pessoa.")
 
-def inserirCircular(idNode, lotacao, latitude, longitude, timestamp):
-    pSQL = "INSERT INTO circularufrpe.circular (IDNODE, LOTACAO, LATITUDE, LONGITUDE, TIMESTAMP) VALUES (%s, %s, %s, %s, %s)"%(str(idNode), str(lotacao), str(latitude), str(longitude), str(timestamp))
+def inserirLocalizacao(idNode, latitude, longitude, timestamp):
+    pSQL = "INSERT INTO circularufrpe.localizacao (IDNODE, LATITUDE, LONGITUDE, TIMESTAMP) VALUES (%s, %s, %s, %s)"%(str(idNode), str(latitude), str(longitude), str(timestamp))
     insercao = executa_SQL(pSQL, cursor, db)
     if insercao == True:
-        return ("Circular inserid com sucesso!")
+        return ("Localização inserida com sucesso!")
     else:
-        return ("Não foi possível inserir o circular.")
+        return ("Não foi possível inserir a localização.")
 
-inserirPessoa("00:19:B9:FB:E2:58",-50,676867867)
-inserirCircular(211,30,99.99292, 12.0101, 3898022)
+def inserirLotacao(lotacao,timestamp):
+    pSQL = "INSERT INTO circularufrpe.lotacao (LOTACAO, TIMESTAMP) VALUES (%s, %s)" % (str(lotacao), str(timestamp))
+    insercao = executa_SQL(pSQL, cursor, db)
+    if insercao == True:
+        return ("Lotação inserida com sucesso!")
+    else:
+        return ("Não foi possível inserir a lotação.")
+
+# inserirPessoa("00:19:B9:FB:E2:58",-50,676867867)
+# inserirLocalizacao(211, 99.99292, 12.0101, 3898022)
+# inserirLotacao(30,3898022)
