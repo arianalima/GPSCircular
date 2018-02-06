@@ -2,7 +2,7 @@
 
 import os
 from flask import Flask, jsonify, make_response
-import Database as db
+from ProjetoPSD_RSI import Database as db
 
 app = Flask(__name__, static_url_path="")
 
@@ -26,6 +26,18 @@ def get_home():
     arq = open(abs_file_path,"r")
     texto = arq.read()
     return texto
+
+
+@app.route('/att-lotacao/<string:mensagem>', methods=['GET'])
+def att_lotacao(mensagem):
+    try:
+        lista_mensagem = mensagem.split(" ")
+        lotacao = lista_mensagem[0]
+        time_stamp = lista_mensagem[1]
+        db.inserirLotacao(int(lotacao),int(time_stamp))
+    except:
+        return "nok"
+    return "ok"
 
 
 @app.route('/add-mac/<string:mensagem>', methods=['GET'])
