@@ -7,9 +7,6 @@ import threading
 import time
 import urllib2
 
-IP_Bernardo = ""
-IP_Ariana = "192.168.48.1"
-IP = IP_Ariana
 
 macs = {}
 n = []
@@ -70,7 +67,7 @@ if __name__ == "__main__":
     def send(message):
         try:
             txt_message = str(message[0]) +"%20"+ str(message[1][0]) +"%20"+ str(message[1][1])
-            urllib2.urlopen("http://"+IP+":5000/circular/" + txt_message).read()
+            urllib2.urlopen("http://10.246.42.39:5000/circular/" + txt_message).read()
             print(message)
         except:
             print"HTPP error"
