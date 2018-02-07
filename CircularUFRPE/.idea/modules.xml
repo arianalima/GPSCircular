@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CircularUFRPE.iml" filepath="$PROJECT_DIR$/CircularUFRPE.iml" />
+      <module fileurl="file://C:\Users\Ariana\Desktop\CircularUFRPE\CircularUFRPE\CircularUFRPE.iml" filepath="C:\Users\Ariana\Desktop\CircularUFRPE\CircularUFRPE\CircularUFRPE.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\Ariana\Desktop\CircularUFRPE\CircularUFRPE\app\app.iml" filepath="C:\Users\Ariana\Desktop\CircularUFRPE\CircularUFRPE\app\app.iml" />
     </modules>
   </component>
 </project>

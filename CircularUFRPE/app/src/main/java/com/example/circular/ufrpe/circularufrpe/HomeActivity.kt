@@ -1,9 +1,12 @@
 package com.example.circular.ufrpe.circularufrpe
 
+import android.content.Context
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -11,6 +14,13 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+
+import com.example.circular.ufrpe.circularufrpe.RetrofitInitializer
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import com.example.circular.ufrpe.circularufrpe.Lotacao
+
 
 class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -22,6 +32,20 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+
+        val call = RetrofitInitializer().lotacaoService().getLotacao()
+        call.enqueue(object :Callback<Lotacao> {
+            override fun onResponse(call: Call<Lotacao>, response: Response<Lotacao>) {
+                response?.body()?.let {
+                    val lotacao: Lotacao = it
+                }
+            }
+
+            override fun onFailure(call: Call<Lotacao>, t: Throwable?) {
+                Log.e("onFailure error", t?.message)
+            }
+        })
+
         val mapFragment = supportFragmentManager
                 .findFragmentById(R.id.fragmento_mapa) as SupportMapFragment
         txt_posicao = findViewById(R.id.home_txt_posicao_atual)
@@ -51,4 +75,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.setMaxZoomPreference(15.0f)
         mMap.setMinZoomPreference(15.0f)
     }
+
+
 }
