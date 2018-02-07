@@ -5,7 +5,7 @@ from threading import Thread, Lock
 import urllib.request
 import ntplib
 
-IP_Bernardo = "192.168.25.50"
+IP_Bernardo = ""
 IP_Ariana = "192.168.48.1"
 IP = IP_Ariana
 
@@ -13,18 +13,24 @@ IP = IP_Ariana
 ntp = ntplib.NTPClient()
 
 
-macs = {}
+class Mac():
+    def __init__(self, mac, sinal, time_stamp_ativo, time_stamp_presente, flag):
+        self.mac = mac
+        self.sinal = sinal
+        self.time_stamp_ativo = time_stamp_ativo
+        self.time_stamp_presente = time_stamp_presente
+        self.flag = flag
 
-def adicionar_dicionario(dicionario,lista,mac = None, sinal = None, time_stamp_ativo = None, time_stamp_presente = None):
-    dicionario[lista[0]] = [lista[0],lista[1],lista[2],lista[3],"p"]
+    def adicionar_em_dicionario(self, dicionario):
+        dicionario[self.mac] = self
 
-def atualizar_dicionario(dicionario, lista, mac = None, sinal = None, time_stamp_ativo = None):
-    dicionario[lista[0]][1] = lista[1]
-    dicionario[lista[0]][2] = lista[2]
+    def atualizar_dicionario(self, dicionario):
+        dicionario[self.mac].time_stamp_ativo = self.time_stamp_ativo
+
 
 mutex_dicionario = Lock()
 
-
+macs = {}
 
 app = Flask(__name__)
 
@@ -37,6 +43,8 @@ def index():
 def get_task(novo_mac):
     if len(novo_mac) == 0:
         abort(404)
+    print(novo_mac)
+    print("novo MAC recebido : {}".format(novo_mac))
     Thread(target=send_mac, args=[novo_mac]).start()
     conta(novo_mac)
     return jsonify({'ok': "mac-recebido"})
@@ -45,53 +53,51 @@ def get_task(novo_mac):
 def conta_lotacao(timestamp,dicionario):
     lotacao = 0
     for i in dicionario.keys():
-        if dicionario[i][4] == str("a"):
+        if dicionario[i].flag() == "a":
             lotacao += 1
     mensagem = str(lotacao) + "%20" + str(timestamp)
-    print("{} dentro do circular em {}".format(lotacao, timestamp))
+    print(mensagem,"deveria enviar a lotação")
     content = urllib.request.urlopen("http://" + IP + ":5001/att-lotacao/" + mensagem).read()
+    print(content,"resposta da lotacao")
 
 
 def send_mac(mensagem):
     mensagem = mensagem.replace(" ","%20")
     content = urllib.request.urlopen("http://" + IP + ":5001/add-mac/" + mensagem).read()
+    print("resposta {} do request de enviar mac".format(content))
 
 
 def conta(mensagem):
-    global macs
     mensagem = mensagem.split(" ")
     mac = mensagem[0]
     sinal = mensagem[1]
     time_stamp = mensagem[2]
-    # mac_n = Mac(mac,sinal,time_stamp,time_stamp,"p")
-    mac_n = [mac,sinal,time_stamp,time_stamp]
-    # Thread(target=gateway, args=[mac_n, mutex_dicionario, macs]).start()
-    gateway(mac_n, mutex_dicionario, macs)
+    mac_n = Mac(mac,sinal,time_stamp,time_stamp,"p")
+    Thread(target=gateway, args=[mac_n, macs, mutex_dicionario]).start()
 
 cache_gateway = []
 
-def gateway(lista_mac, mutex, dicionario):
-
+def gateway(objeto_mac, dicionario, mutex):
     if mutex.locked():
-        print("Mutex is locked")
-        cache_gateway.append(lista_mac)
+        cache_gateway.append(objeto_mac)
     else:
         mutex.acquire()
         try:
             for i in cache_gateway:
-                dicionario_funcoes(i, dicionario)
+                dicionario_funcoes(i,dicionario)
             cache_gateway.clear()
-            dicionario_funcoes(lista_mac, dicionario)
+            dicionario_funcoes(objeto_mac,dicionario)
         finally:
             mutex.release()
 
 
 
-def dicionario_funcoes(lista_mac, dicionario):
-    if lista_mac[0] not in dicionario.keys():
-        adicionar_dicionario(dicionario,lista_mac)
+def dicionario_funcoes(objeto_mac,dicionario):
+    if objeto_mac.mac not in dicionario.keys():
+        objeto_mac.adicionar_em_dicionario(dicionario)
+        print("adicionou mac {} em um dicionario".format(objeto_mac.mac))
     else:
-        atualizar_dicionario(dicionario,lista_mac)
+        objeto_mac.atualizar_dicionario(dicionario)
 
 
 
@@ -100,10 +106,10 @@ def worker(timestamp, dicionario, tempo_vida_ativo, tempo_vida_presente = 60):
     for j in dicionario.keys():
         dicionario_keys.append(j)
     for i in dicionario_keys:
-        if (int(dicionario[i][2]) + tempo_vida_ativo) < timestamp:
+        if (int(dicionario[i].time_stamp_ativo) + tempo_vida_ativo) < timestamp:
             del dicionario[i]
-        elif int(dicionario[i][3]) + int(tempo_vida_presente) < timestamp:
-            dicionario[i][4] = "a"
+        elif int(dicionario[i].time_stamp_presente + tempo_vida_presente) < timestamp:
+            dicionario[i].flag = "a"
 
 
 def sub_main_thread(dict, mutex, tempo_atual):
@@ -116,19 +122,38 @@ def sub_main_thread(dict, mutex, tempo_atual):
                 worker(timestamp_atual, dict, 90)
             finally:
                 mutex.release()
-        Thread(target=conta_lotacao,args=(timestamp_atual, dict)).start()
+        conta_lotacao(timestamp_atual, dict)
         agora = time.time()
-        slp = (antes + 1) - agora
+        slp = 10
+        # slp = (antes + 1) - agora
         time.sleep(slp)
         timestamp_atual += 1
 
 
+###Não sei porque não funcionou
+# class Time():
+#     def __init__(self):
+#         ntp = ntplib.NTPClient()
+#         resposta = ntp.request("pool.ntp.org")
+#         self.__time = int(resposta.recv_time)
+#         Thread(target=self.loop()).start()
+#
+#     def loop(self):
+#         antes = time.time()
+#         while True:
+#             agora = time.time()
+#             if int(agora) == int(antes) + 1:
+#                 antes = time.time()
+#                 self.__time += 1
+#                 # print(self.__time)
+#
+#     def __repr__(self):
+#         return self.__time
+
+
+
 if __name__ == '__main__':
-    while True:
-        try:
-            resposta = ntp.request("pool.ntp.org")
-            hora_atual = int(resposta.recv_time)
-        finally:
-            break
+    resposta = ntp.request("pool.ntp.org")
+    hora_atual = int(resposta.recv_time)
     Thread(target=sub_main_thread, args=[macs, mutex_dicionario, hora_atual]).start()
-    app.run(host="0.0.0.0", port=5000)
+    app.run(debug=True, host="0.0.0.0", port=5000)
