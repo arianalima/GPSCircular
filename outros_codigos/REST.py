@@ -7,16 +7,13 @@ from ProjetoPSD_RSI import Database as db
 app = Flask(__name__, static_url_path="")
 
 
-
 @app.errorhandler(400)
 def bad_request():
     return make_response(jsonify({'error': 'Bad request'}), 400)
 
-
 @app.errorhandler(404)
 def not_found():
     return make_response(jsonify({'error': 'Not found'}), 404)
-
 
 @app.route('/', methods=['GET'])
 def get_home():
@@ -26,7 +23,6 @@ def get_home():
     arq = open(abs_file_path,"r")
     texto = arq.read()
     return texto
-
 
 @app.route('/att-lotacao/<string:mensagem>', methods=['GET'])
 def att_lotacao(mensagem):
@@ -38,7 +34,6 @@ def att_lotacao(mensagem):
     except:
         return "nok"
     return "ok"
-
 
 @app.route('/add-mac/<string:mensagem>', methods=['GET'])
 def add_mac(mensagem):
@@ -58,7 +53,11 @@ def get_posicao():
 
 @app.route('/circular/get/lotacao', methods=['GET'])
 def get_lotacao():
-    return jsonify({'resultado': "tem 123097128037182093 pessoas"})
+    lotacao = db.getLotacao()
+    if lotacao!="-1":
+        return jsonify({'resultado': "tem "+lotacao+" pessoa(s)"})
+    else:
+        return "nok"
 
 
 if __name__ == '__main__':
