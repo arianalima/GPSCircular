@@ -10,7 +10,7 @@ def executa_SQL(pSQL, cursor, db):
         print("Error: Não foi possível executar o SQL")
         db.rollback()
 
-def Busca_SQL(cursor, pSQL):
+def Busca_SQL(pSQL, cursor):
     try:
         cursor.execute(pSQL)
         results = cursor.fetchall()
@@ -73,6 +73,15 @@ def inserirLotacao(lotacao,timestamp):
     else:
         return ("Não foi possível inserir a lotação.")
 
+def getLotacao():
+    pSQL = "SELECT LOTACAO from circularufrpe.lotacao ORDER BY ID DESC LIMIT 1"
+    resultado = Busca_SQL(pSQL, cursor)
+    if len(resultado)==0:
+        return ("-1")
+    return str(resultado[0][0])
+
+
+# inserirLotacao(30,1517843934)
+# print(getLotacao())
 # inserirPessoa("00:19:B9:FB:E2:58",-50,676867867)
 # inserirLocalizacao(211, 99.99292, 12.0101, 3898022)
-# inserirLotacao(30,3898022)
