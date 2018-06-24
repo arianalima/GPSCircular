@@ -28,15 +28,21 @@ class Mac():
 dicionario_segundos = {}
 
 with open("coleta1.txt") as arquivo:
-    for linha in arquivo:
-        linha = linha.split(" ")
-        timestamp = int(linha[2])
-        rssi = int(linha[1])
-        mac = linha[0]
-        if timestamp not in dicionario_segundos:
-            dicionario_segundos[timestamp] = [(mac,rssi)]
-        elif mac not in dicionario_segundos[timestamp]:
-            dicionario_segundos[timestamp].append((mac,rssi))
+    def create_dic_data(timestamp, rssi, mac, dictionary):
+        if timestamp in dictionary.keys():
+            dictionary[timestamp].append((mac, rssi))
+        else:
+            dictionary[timestamp] = [(mac, rssi)]
+
+
+    def process_file(file_read, dictionary):
+        processed_lines = list(map(lambda x: x.replace("Log: ", "").split(), file_read))
+        list(map(lambda x: create_dic_data(x[2], x[1], x[0], dictionary), processed_lines))
+        return dictionary
+
+    process_file(arquivo, dicionario_segundos)
+
+print(dicionario_segundos)
 
 antes = int(time.time()) + 0
 
