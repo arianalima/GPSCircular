@@ -28,9 +28,9 @@ int dst = 0;
 time_t now;
 
 //Parametros Wi-Fi
-const char* ssid = "GVT-BBB7"; //Nome da rede
-const char* password = "5067015358"; //Senha da Rede
- 
+const char* ssid = ""; //Nome da rede
+const char* password = ""; //Senha da Rede
+
 //Parametros MQTT
 const char* mqtt_server = "m11.cloudmqtt.com"; //server MQTT
 const int mqtt_port = 10443; //Porta MQTT
@@ -102,7 +102,7 @@ static void showMetadata(SnifferPacket *snifferPacket) {
   //Serial.print(" Ch: ");
   //Serial.print(wifi_get_channel());
 
-  
+
   getMAC(addr, snifferPacket->data, 10);
 //  Serial.print(" Peer MAC: ");
 //  Serial.print(addr);
@@ -151,9 +151,10 @@ static os_timer_t channelHop_timer;
 
 void channelHop()
 {
-  contador++; 
+  contador++;
   // hoping channels 1-14
-  uint8 new_channel = wifi_get_channel() + 1;
+  uint8 new_channel = wifi_g
+ et_channel() + 1;
   if (new_channel > 14)
     new_channel = 1;
   wifi_set_channel(new_channel);
@@ -165,14 +166,14 @@ void formatFS(void){
 
 void createFile(void){
   File wFile;
- 
+
   //Cria o arquivo se ele não existir
   if(SPIFFS.exists("/log.txt")){
     Serial.println("Arquivo ja existe!");
   } else {
     Serial.println("Criando o arquivo...");
     wFile = SPIFFS.open("/log.txt","w+");
- 
+
     //Verifica a criação do arquivo
     if(!wFile){
       Serial.println("Erro ao criar arquivo!");
@@ -186,18 +187,18 @@ void createFile(void){
 void deleteFile(void) {
   //Remove o arquivo
   if(SPIFFS.remove("/log.txt")){
-    Serial.println("Erro ao remover arquivo!");
-  } else {
     Serial.println("Arquivo removido com sucesso!");
+  } else {
+    Serial.println("Erro ao remover arquivo!");
   }
 }
 
 void writeFile(String msg) {
- 
+
   //Abre o arquivo para adição (append)
   //Inclue sempre a escrita na ultima linha do arquivo
   File rFile = SPIFFS.open("/log.txt","a+");
- 
+
   if(!rFile){
     Serial.println("Erro ao abrir arquivo!");
   } else {
@@ -210,7 +211,7 @@ void writeFile(String msg) {
 void closeFS(void){
   SPIFFS.end();
 }
- 
+
 void openFS(void){
   //Abre o sistema de arquivos
   if(!SPIFFS.begin()){
@@ -228,6 +229,8 @@ void readFile(void) {
     String line = rFile.readStringUntil('\n');
     Serial.println(line);
   }
+  Serial.println();
+  Serial.println("###Fim do arquivo!###");
   rFile.close();
 }
 
@@ -258,18 +261,7 @@ void setup_time(){
   Serial.println("");
 }
 
-
-void setup() {
-  // set the WiFi chip to "promiscuous" mode aka monitor mode
-  Serial.begin(115200);
-  setup_wifi();
-  setup_time();
-  
-  //Abre o sistema de arquivos (mount)
-  openFS();
-  //Cria o arquivo caso o mesmo não exista
-  createFile();
-  
+void changeMode(){
   delay(10);
   wifi_set_opmode(STATION_MODE);
   wifi_set_channel(1);
@@ -279,11 +271,26 @@ void setup() {
   delay(10);
   wifi_promiscuous_enable(ENABLE);
 
-
   // setup the channel hoping callback timer
   os_timer_disarm(&channelHop_timer);
   os_timer_setfn(&channelHop_timer, (os_timer_func_t *) channelHop, NULL);
   os_timer_arm(&channelHop_timer, CHANNEL_HOP_INTERVAL_MS, 1);
+}
+
+void setup() {
+  // set the WiFi chip to "promiscuous" mode aka monitor mode
+  Serial.begin(115200);
+  setup_wifi();
+  setup_time();
+
+  //Abre o sistema de arquivos (mount)
+  openFS();
+  //Cria o arquivo caso o mesmo não exista
+  createFile();
+
+  changeMode(); //fazer captura (writeFile())
+//    readFile();
+//  deleteFile();
 }
 
 void loop() {
