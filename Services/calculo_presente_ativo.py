@@ -1,6 +1,7 @@
+import os
+
 PRESENTE = "p"
 ATIVO = "a"
-
 
 class Mac:
     def __init__(self, mac, sinal, time_stamp_ativo, time_stamp_presente, flag = PRESENTE):
@@ -88,30 +89,57 @@ def vigia_dicionario(timestamp, dicionario, tempo_vida_ativo, tempo_vida_present
     lista_ativos = list(filter(lambda x: dicionario[x].is_ativo(), dicionario.keys()))
     contador = len(lista_ativos)
 
-    segundo = timestamp - timestamp_inicial
+    return contador
 
-    def salvar_em_arquivo(contagem):
-        arquivo = open("tesedicionario" + str(tempo_vida_ativo) + ".txt","a")
-        arquivo.write(str(contagem) + "\n")
-        arquivo.close()
 
-    salvar_em_arquivo(contador)
-    print(str(segundo + 1) + "," + str(contador))
+def criar_cabecalho(coleta, presente, ativo):
+    arquivo = open("..\\Coletas\\coleta "+ str(coleta) +" algoritmo p" + str(presente) + \
+              " a" + str(ativo) + ".csv", "a")
+    arquivo.write("segundo,calculo,timestamp" + "\n")
+    arquivo.close()
 
+
+def salvar_em_arquivo(contagem, coleta, presente, ativo, segundo, timestamp):
+    arquivo = open("..\\Coletas\\coleta "+ str(coleta) +" algoritmo p" + str(presente) + \
+              " a" + str(ativo) + ".csv", "a")
+    arquivo.write("{},{},{}".format(str(segundo),str(contagem),str(timestamp)) + "\n")
+    arquivo.close()
 
 if __name__ == '__main__':
+    coleta = 1
+
+    tempo_presente = 80
+    tempo_ativo = 90
+
+    cur_path = os.path.dirname(__file__)
+    path_coleta = os.path.relpath('..\\Coletas\\coleta' + str(coleta) + '.txt', cur_path)
+
     dicionario_segundos = {}
-    dicionario_150 = {}
+    dicionario = {}
 
-    timestamp_inicial = 1516185697
-    timestamp_atual = 1516185697
-
-    arquivo = open("coleta1.txt")
+    arquivo = open("..\\Coletas\\coleta" + str(coleta) + ".txt")
+    # arquivo = open(path_coleta)
     linhas = arquivo.readlines()
     arquivo.close()
+
+    primeira_linha = linhas[0].split()
+    ultima_linha = linhas[-1].split()
+
+    timestamp_inicial = int(primeira_linha[2])
+    timestamp_atual = timestamp_inicial
+    timestamp_final = int(ultima_linha[2])
+
     list(map(add_linha_dicionario, linhas))
 
-    while True:
-        worker(timestamp_atual,dicionario_150)
-        vigia_dicionario(timestamp_atual,dicionario_150,90,tempo_vida_presente=80)
+    criar_cabecalho(coleta,tempo_presente,tempo_ativo)
+
+    while timestamp_atual <= timestamp_final:
+        worker(timestamp_atual,dicionario)
+        contador = vigia_dicionario(timestamp_atual,dicionario,tempo_ativo,tempo_presente)
+
+        segundo = timestamp_atual - timestamp_inicial
+
+
+        salvar_em_arquivo(contador,coleta,tempo_presente,tempo_ativo,segundo,timestamp_atual)
+        print(str(segundo + 1) + "," + str(contador))
         timestamp_atual += 1
