@@ -106,18 +106,18 @@ def salvar_em_arquivo(contagem, coleta, presente, ativo, segundo, timestamp):
     arquivo.close()
 
 if __name__ == '__main__':
-    coleta = 1
+    coleta = 9
 
     tempo_presente = 80
     tempo_ativo = 90
 
     cur_path = os.path.dirname(__file__)
-    path_coleta = os.path.relpath('..\\Coletas\\coleta' + str(coleta) + '.txt', cur_path)
+    path_coleta = os.path.relpath('..\\Coletas\\coleta ' + str(coleta) + '.txt', cur_path)
 
     dicionario_segundos = {}
     dicionario = {}
 
-    arquivo = open("..\\Coletas\\coleta" + str(coleta) + ".txt")
+    arquivo = open("..\\Coletas\\coleta " + str(coleta) + ".txt")
     # arquivo = open(path_coleta)
     linhas = arquivo.readlines()
     arquivo.close()

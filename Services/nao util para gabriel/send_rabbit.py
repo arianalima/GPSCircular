@@ -10,7 +10,7 @@ mqttc.connect("192.168.48.1", 1883)
 
 dicionario_segundos = {}
 
-with open("coleta1.txt") as arquivo:
+with open("coleta 1.txt") as arquivo:
     for linha in arquivo:
         linha = linha.split(" ")
         timestamp = int(linha[2])

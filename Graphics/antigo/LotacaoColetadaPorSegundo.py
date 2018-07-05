@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-f = open('coleta1.txt','r')
+f = open('coleta 1.txt','r')
 data = f.readlines()
 for line in range(len(data)):
     data[line] = data[line].split()
