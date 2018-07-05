@@ -1,4 +1,5 @@
 import os
+import datetime
 
 PRESENTE = "p"
 ATIVO = "a"
@@ -93,20 +94,28 @@ def vigia_dicionario(timestamp, dicionario, tempo_vida_ativo, tempo_vida_present
 
 
 def criar_cabecalho(coleta, presente, ativo):
-    arquivo = open("..\\Coletas\\coleta "+ str(coleta) +" algoritmo p" + str(presente) + \
-              " a" + str(ativo) + ".csv", "a")
-    arquivo.write("segundo,calculo,timestamp" + "\n")
+    path_arquivo = "..\\Coletas\\coleta "+ str(coleta) +" algoritmo p" + str(presente) + \
+              " a" + str(ativo) + ".csv"
+
+    arquivo = open(path_arquivo, "a")
+    arquivo.write("segundo,calculo,timestamp,hora_minuto" + "\n")
     arquivo.close()
 
 
 def salvar_em_arquivo(contagem, coleta, presente, ativo, segundo, timestamp):
-    arquivo = open("..\\Coletas\\coleta "+ str(coleta) +" algoritmo p" + str(presente) + \
-              " a" + str(ativo) + ".csv", "a")
-    arquivo.write("{},{},{}".format(str(segundo),str(contagem),str(timestamp)) + "\n")
+    time = datetime.datetime.fromtimestamp(timestamp)
+    minuto = time.minute
+    hora = (time.hour + 2)
+    texto_hora = "{}:{}".format(str(hora),str(minuto))
+    path_arquivo = "..\\Coletas\\coleta " + str(coleta) + " algoritmo p" + str(presente) + \
+                   " a" + str(ativo) + ".csv"
+
+    arquivo = open(path_arquivo, "a")
+    arquivo.write("{},{},{},{}".format(str(segundo),str(contagem),str(timestamp),texto_hora) + "\n")
     arquivo.close()
 
 if __name__ == '__main__':
-    coleta = 9
+    coleta = 1
 
     tempo_presente = 80
     tempo_ativo = 90
@@ -138,7 +147,6 @@ if __name__ == '__main__':
         contador = vigia_dicionario(timestamp_atual,dicionario,tempo_ativo,tempo_presente)
 
         segundo = timestamp_atual - timestamp_inicial
-
 
         salvar_em_arquivo(contador,coleta,tempo_presente,tempo_ativo,segundo,timestamp_atual)
         print(str(segundo + 1) + "," + str(contador))
