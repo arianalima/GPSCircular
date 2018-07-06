@@ -98,21 +98,33 @@ def criar_cabecalho(coleta, presente, ativo):
               " a" + str(ativo) + ".csv"
 
     arquivo = open(path_arquivo, "a")
-    arquivo.write("segundo,calculo,timestamp,hora_minuto" + "\n")
+    arquivo.write("segundo,calculo,timestamp,hora_minuto,valor_real" + "\n")
     arquivo.close()
 
-
-def salvar_em_arquivo(contagem, coleta, presente, ativo, segundo, timestamp):
+def get_texto_hora(timestamp):
     time = datetime.datetime.fromtimestamp(timestamp)
     minuto = time.minute
-    hora = (time.hour + 2)
-    texto_hora = "{}:{}".format(str(hora),str(minuto))
+    hora = (time.hour + 3)
+    texto_hora = "{}:{}".format(str(hora), str(minuto).rjust(2, "0"))
+    return texto_hora
+
+def set_valor_real(ultimo_valor, dicionario_valor, texto_hora):
+    if (texto_hora in dicionario_valor):
+        ultimo_valor = dicionario_valor[texto_hora]
+
+def salvar_em_arquivo(contagem, coleta, presente, ativo, segundo, timestamp,texto_hora, ultimo_valor):
+
     path_arquivo = "..\\Coletas\\coleta " + str(coleta) + " algoritmo p" + str(presente) + \
                    " a" + str(ativo) + ".csv"
 
     arquivo = open(path_arquivo, "a")
-    arquivo.write("{},{},{},{}".format(str(segundo),str(contagem),str(timestamp),texto_hora) + "\n")
+    arquivo.write("{},{},{},{},{}".format(str(segundo),str(contagem),str(timestamp),texto_hora,ultimo_valor) + "\n")
     arquivo.close()
+
+def add_dicionario_coleta_real(dicionario):
+    def run(lista):
+        dicionario[lista[0]] = lista[1]
+    return run
 
 if __name__ == '__main__':
     coleta = 1
@@ -126,10 +138,20 @@ if __name__ == '__main__':
     dicionario_segundos = {}
     dicionario = {}
 
-    arquivo = open("..\\Coletas\\coleta " + str(coleta) + ".txt")
+    arquivo_coleta_real = open("..\\Coletas\\coleta {} real.txt".format(str(coleta)))
+    dicionario_coleta_real = {}
+    linhas = arquivo_coleta_real.readlines()
+    arquivo_coleta_real.close()
+
+    linas_splitadas = list(map(lambda x: x.split(),linhas))
+    list(map(add_dicionario_coleta_real(dicionario_coleta_real),linas_splitadas))
+
+    ultimo_valor = linas_splitadas[0][1]
+
+    arquivo_coleta = open("..\\Coletas\\coleta {}.txt".format(str(coleta)))
     # arquivo = open(path_coleta)
-    linhas = arquivo.readlines()
-    arquivo.close()
+    linhas = arquivo_coleta.readlines()
+    arquivo_coleta.close()
 
     primeira_linha = linhas[0].split()
     ultima_linha = linhas[-1].split()
@@ -143,11 +165,14 @@ if __name__ == '__main__':
     criar_cabecalho(coleta,tempo_presente,tempo_ativo)
 
     while timestamp_atual <= timestamp_final:
+        texto_hora = get_texto_hora(timestamp_atual)
+        if (texto_hora in dicionario_coleta_real):
+            ultimo_valor = dicionario_coleta_real[texto_hora]
+
         worker(timestamp_atual,dicionario)
         contador = vigia_dicionario(timestamp_atual,dicionario,tempo_ativo,tempo_presente)
 
         segundo = timestamp_atual - timestamp_inicial
-
-        salvar_em_arquivo(contador,coleta,tempo_presente,tempo_ativo,segundo,timestamp_atual)
+        salvar_em_arquivo(contador,coleta,tempo_presente,tempo_ativo,segundo,timestamp_atual,texto_hora, ultimo_valor)
         print(str(segundo + 1) + "," + str(contador))
         timestamp_atual += 1
