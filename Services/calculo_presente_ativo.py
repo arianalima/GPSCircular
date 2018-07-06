@@ -1,4 +1,5 @@
 import os
+import pytz
 import datetime
 
 PRESENTE = "p"
@@ -102,9 +103,9 @@ def criar_cabecalho(coleta, presente, ativo):
     arquivo.close()
 
 def get_texto_hora(timestamp):
-    time = datetime.datetime.fromtimestamp(timestamp)
+    time = datetime.datetime.fromtimestamp(timestamp,pytz.UTC)
     minuto = time.minute
-    hora = (time.hour + 3)
+    hora = (time.hour)
     texto_hora = "{}:{}".format(str(hora), str(minuto).rjust(2, "0"))
     return texto_hora
 
@@ -130,7 +131,7 @@ if __name__ == '__main__':
     coleta = 1
 
     tempo_presente = 80
-    tempo_ativo = 90
+    tempo_ativo = 180
 
     cur_path = os.path.dirname(__file__)
     path_coleta = os.path.relpath('..\\Coletas\\coleta ' + str(coleta) + '.txt', cur_path)

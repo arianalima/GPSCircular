@@ -1,0 +1,27 @@
+12:17 36 central
+12:18 38 biblioteca
+12:20 38 veterinária
+12:21 38 cegoe
+12:22 36 cegoe
+12:23 36 estrada
+12:24 36 estrada
+12:25 36 estrada
+12:26 51 zootecnia
+12:27 51 zootecnia
+12:28 51 zootecnia
+12:29 51 saindo zootecnia
+12:30 51 estrada
+12:31 51 estrada
+12:32 51 estrada
+12:33 51 estrada
+12:34 51 estrada
+12:35 51 dando a volta na pesca
+12:36 31 ceagri
+12:38 31 saindo do ceagri
+12:40 31 indo pra transrural
+12:41 31 estrada
+12:42 31 estrada
+12:43 30 cegoe
+12:45 30 atravessando a rua
+12:46 26 guarita central
+12:47 26 central
