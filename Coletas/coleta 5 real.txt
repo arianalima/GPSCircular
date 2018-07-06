@@ -1,0 +1,30 @@
+10:36 24 guarita ceagri
+10:37 24 saindo ceagri
+10:38 24 saindo ceagri
+10:39 24 transrural
+10:40 24 transrural
+10:41 24 transrural
+10:42 23 cegoe
+10:43 22 piscina
+10:44 22 chegando central
+10:45 4 saindo central
+10:46 4 biblioteca
+10:47 4 guarita veterinaria
+10:48 4 biblioteca setorial
+10:49 5 cegoe
+10:50 5 transrural
+10:51 9 transrural
+10:52 9 chegando zootecnia
+10:53 9 zootecnia
+10:54 9 zootecnia
+10:55 9 zootecnia
+10:56 9 zootecnia
+10:57 8 zootecnia
+10:58 9 zootecnia
+10:59 12 zootecnia
+11:00 21 transrural
+11:01 21 transrural
+11:02 21 transrural
+11:03 21 transrural
+11:04 28 pesca
+11:05 28 ceagri

@@ -1,0 +1,32 @@
+13:48 26 cegoe
+13:49 26 transrural
+13:50 26 transrural
+13:51 26 transrural
+13:52 19 zootecnia
+13:53 22 zootecnia
+13:54 23 zootecnia
+13:55 23 zootecnia
+13:56 23 zootecnia
+13:57 23 transrural
+13:58 23 transrural
+13:59 23 transrural
+14:00 23 transrural
+14:01 23 pesca
+14:02 22 pesca
+14:03 8 ceagri
+14:04 10 ceagri
+14:05 11 ceagri
+14:06 11 guarita ceagri
+14:07 11 ceagri
+14:08 11 transrural
+14:09 11 transrural
+14:10 11 transrural
+14:11 10 cegoe
+14:12 9 prefeitura
+14:13 10 prefeitura
+14:14 10 prefeitura
+14:15 14 cegoe
+14:16 14 cegoe
+14:17 14 barraquinhas cegoe
+14:18 13 piscina
+14:19 13 central

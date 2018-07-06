@@ -1,0 +1,30 @@
+11:06 49 guarita ceagri
+11:07 51 ceagri
+11:08 51 ceagri
+11:09 51 transrural
+11:10 51 transrural
+11:11 50 cegoe
+11:12 50 cegoe
+11:13 50 central
+11:14 50 central
+11:15 4 central
+11:16 19 central
+11:17 20 biblioteca
+11:18 20 veterinaria
+11:19 20 biblioteca setorial
+11:20 20 cegoe
+11:21 21 transrural
+11:22 12 zootecnia
+11:23 12 zootecnia
+11:24 12 zootecnia
+11:25 15 zootecnia
+11:26 15 zootecnia
+11:27 15 zootecnia
+11:28 15 zootecnia
+11:29 15 zootecnia
+11:30 18 transrural
+11:31 18 transrural
+11:32 15 transrural
+11:33 15 transrural
+11:34 15 pesca
+11:35 16 pesca

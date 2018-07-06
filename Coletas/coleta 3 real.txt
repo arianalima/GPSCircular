@@ -1,0 +1,29 @@
+13:47 21 central
+13:48 24 biblioteca
+13:49 24 biblioteca setorial
+13:50 24 cegoe
+13:51 24 transrural
+13:52 24 transrural
+13:53 17 zootecnia
+13:54 17 zootecnia
+13:55 17 zootecnia
+13:56 17 zootecnia
+13:57 17 estrada
+13:58 17 estrada
+13:59 17 estrada
+14:00 17 estrada
+14:01 17 estrada
+14:02 17 pesca
+14:03 3 ceagri
+14:04 3 ceagri
+14:05 3 ceagri
+14:06 3 ceagri
+14:07 3 ceagri
+14:08 4 pesca
+14:09 4 transrural
+14:10 4 transrural
+14:11 4 prefeitura
+14:12 4 prefeitura
+14:13 4 prefeitura
+14:14 3 cegoe
+14:15 3 barraquinhas cegoe
