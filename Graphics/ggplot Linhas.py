@@ -8,27 +8,23 @@ df4 = pd.read_csv("..\\Coletas\\coleta 1 algoritmo p60 a90.csv")
 df5 = pd.read_csv("..\\Coletas\\coleta 1 algoritmo p60 a150.csv")
 df6 = pd.read_csv("..\\Coletas\\coleta 1 algoritmo p60 a180.csv")
 
-print(df1["calculo"].map(str))
+newdf = pd.DataFrame({})
 
-df1["calculo1_80_90"] = df1["calculo"].map(str)
-df2["calculo1_80_150"] = df2["calculo"].map(str)
-df3["calculo1_80_180"] = df3["calculo"].map(str)
-df4["calculo1_60_90"] = df4["calculo"].map(str)
-df5["calculo1_60_150"] = df5["calculo"].map(str)
-df6["calculo1_60_180"] = df6["calculo"].map(str)
+newdf["segundo"] = df1["segundo"].map(str)
+newdf["valor_real"] = df1["valor_real"].map(str)
+newdf["calculo1_80_90"] = df1["calculo"].map(str)
+newdf["calculo1_80_150"] = df2["calculo"].map(str)
+newdf["calculo1_80_180"] = df3["calculo"].map(str)
+newdf["calculo1_60_90"] = df4["calculo"].map(str)
+newdf["calculo1_60_150"] = df5["calculo"].map(str)
+newdf["calculo1_60_180"] = df6["calculo"].map(str)
 
-print(2)
-g = ggplot(data=df) +\
-    geom_line(aes(x="segundo", y="calculo"), data=df)
+newdf.to_csv("coleta1_completa.csv")
+
+newdf["x"] = newdf.index
+g = ggplot(aes(x='segundo'), data=newdf) +\
+    geom_line(aes(y='valor_real'), color='blue')
+    # geom_line(aes(y='calculo1_80_90'), color='red') +\
+    # geom_line(aes(y='calculo1_80_150'), color='green')
 g.show()
 
-
-# from ggplot import ggplot, geom_line, aes
-# import pandas as pd
-#
-# df = pd.DataFrame({'x':range(15),'a': range(5,16), 'b': range(5, 16), 'c': range(7, 18)})
-# a = ggplot(aes(x='x'), data=df) +\
-#     geom_line(aes(y='a'), color='blue') +\
-#     geom_line(aes(y='b'), color='red') +\
-#     geom_line(aes(y='c'), color='green')
-# a.show()
