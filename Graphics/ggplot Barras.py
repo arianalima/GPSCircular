@@ -22,10 +22,18 @@ def list_minutos(coleta):
 list(map(lambda x : list_minutos(x),range(1,quantidadeColetas+1)))
 
 # print(minutos)
-def gg_plota_bar():
+def gg_plota_bar_node():
    df = pd.DataFrame({'Minutos': minutos,'Coletas':list(range(quantidadeColetas))})
    plt = ggplot(aes(x='Minutos',y='Coletas'), data=df) + geom_bar(fill= 'blue') +ggtitle("Tempo médio das viagens")
    plt.show()
 
-gg_plota_bar()
+def gg_plota_bar_real():
+    df = pd.DataFrame({'Minutos': [24, 30, 28, 26, 29, 31, 32, 29, 41], 'Coletas': list(range(quantidadeColetas))})
+    plt_r = ggplot(aes(x='Minutos', y='Coletas'), data=df) + geom_bar(fill='blue') + ggtitle("Tempo médio das viagens")
+    plt_r.show()
+
+gg_plota_bar_real()
+
+# gg_plota_bar_node()
+
 

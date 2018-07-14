@@ -153,8 +153,7 @@ void channelHop()
 {
   contador++;
   // hoping channels 1-14
-  uint8 new_channel = wifi_g
- et_channel() + 1;
+  uint8 new_channel = wifi_get_channel() + 1;
   if (new_channel > 14)
     new_channel = 1;
   wifi_set_channel(new_channel);
