@@ -207,9 +207,9 @@ void writeFile(String msg) {
   rFile.close();
 }
 
-void closeFS(void){
-  SPIFFS.end();
-}
+//void closeFS(void){
+//  SPIFFS.end();
+//}
 
 void openFS(void){
   //Abre o sistema de arquivos
