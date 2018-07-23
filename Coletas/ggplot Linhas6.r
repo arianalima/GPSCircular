@@ -1,3 +1,5 @@
+library("ggplot2")
+
 df1 <- read.csv(file="C:\\Users\\Bernardo\\Desktop\\Projetos\\Python\\GPSCircular\\Coletas\\coleta 6 algoritmo p60 a90.csv",header = TRUE)
 df2 <- read.csv(file="C:\\Users\\Bernardo\\Desktop\\Projetos\\Python\\GPSCircular\\Coletas\\coleta 6 algoritmo p60 a150.csv",header = TRUE)
 df3 <- read.csv(file="C:\\Users\\Bernardo\\Desktop\\Projetos\\Python\\GPSCircular\\Coletas\\coleta 6 algoritmo p60 a180.csv",header = TRUE)

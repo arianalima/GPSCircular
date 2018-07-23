@@ -1,6 +1,8 @@
 import os
 import pytz
 import datetime
+from urllib.request import urlopen as get_request
+import json
 
 PRESENTE = "p"
 ATIVO = "a"
@@ -46,22 +48,6 @@ def add_linha_dicionario(linha):
     elif abs(dicionario_segundos[timestamp][mac]) < abs(rssi):
         dicionario_segundos[timestamp][mac] = rssi
 
-# with open("coleta1.txt") as arquivo:
-#     def create_dic_data(timestamp, rssi, mac, dictionary):
-#         if timestamp not in dictionary:
-#             dictionary[timestamp] = {}
-#         if mac not in dictionary[timestamp]:
-#             dictionary[timestamp][mac] = rssi
-#         elif abs(dictionary[timestamp][mac]) < abs(rssi):
-#             dictionary[timestamp][mac] = rssi
-#
-#     def process_file(file_read, dictionary):
-#         processed_lines = list(map(lambda x: x.replace("Log: ", "").split(), file_read))
-#         list(map(lambda x: create_dic_data(x[2], int(x[1]), x[0], dictionary), processed_lines))
-#         return dictionary
-#
-#     process_file(arquivo, dicionario_segundos)
-
 def worker(timestamp, dicionario):
     if timestamp in dicionario_segundos.keys():
         sub_dicionario = dicionario_segundos[timestamp]
@@ -92,6 +78,20 @@ def vigia_dicionario(timestamp, dicionario, tempo_vida_ativo, tempo_vida_present
     contador = len(lista_ativos)
 
     return contador
+
+def get_clima(timestamp, latitude = -8.017756, longitude = -34.949524):
+     resposta_json = get_request(
+         "https://api.darksky.net/forecast/8f472164117a0c42dfae9a9902f8d4d9/{},{},{}?units=si"
+     .format(latitude, longitude, timestamp))\
+         .read()
+     resposta_dict = json.loads(resposta_json)
+     clima_agora = resposta_dict["currently"]
+     temperatura_aparente = clima_agora["apparentTemperature"]
+     temperatura_real = clima_agora["temperature"]
+     velocidade_vento = clima_agora["windSpeed"]
+     print("foi")
+
+
 
 
 def criar_cabecalho(coleta, presente, ativo):
@@ -128,9 +128,9 @@ def add_dicionario_coleta_real(dicionario):
     return run
 
 if __name__ == '__main__':
-    coleta = 1
+    coleta = 9
 
-    tempo_presente = 80
+    tempo_presente = 60
     tempo_ativo = 180
 
     cur_path = os.path.dirname(__file__)
