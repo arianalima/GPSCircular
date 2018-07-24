@@ -7,31 +7,36 @@ import pandas as pd
 numero_coletas = 8
 data_frames = []
 
-for coleta in range(1, numero_coletas):
+
+def create_df(lista, coleta):
     arq = open("../Coletas/coleta {} real.txt".format(coleta), "r")
     tempo = arq.readlines()
     dado = []
     data = []
-    for linha in tempo:
+
+    def get_dados(linha):
         linha = linha.split()
         data.append(linha[0])
-        dado.append(linha[1])
+        dado.append(int(linha[1]))
+    list(map(lambda x: get_dados(x), tempo))
 
-    for x in range(len(data)):
-        data[x] = float(data[x].replace(":", "."))
+    def reformat(indice):
+        data[indice] = float(data[indice].replace(":", "."))
 
-    print(dado)
-    print(data)
+    list(map(lambda x: reformat(x), range(len(data))))
+
     dic = {"coleta {}".format(coleta): dado, "hora": data}
     df = pd.DataFrame(dic)
     df = df.set_index("hora")
     data_frames.append(df)
     arq.close()
 
-# print(data_frames)
-result = reduce(lambda left, right: left.merge(right, how='outer', left_index=True, right_on="hora", left_on="hora"),
-                data_frames)
 
+list(map(lambda x : create_df(data_frames,x), range(1,numero_coletas)))
+# print(data_frames)
+result = reduce(lambda left, right: left.merge(right, how='outer', left_index=True, right_on="hora"),
+                data_frames)
+result = pd.DataFrame(result)
 plt.plot(result)
 plt.legend([*result.keys()])
 plt.xlabel("Hora")
