@@ -33,6 +33,50 @@ class Mac:
     def is_ativo(self):
         if self.__flag == ATIVO:
             return True
+        return False
+
+class Clima:
+
+    class __Clima:
+        pass
+
+    instance = None
+
+    def __init__(self):
+        if not Clima.instance:
+            Clima.instance = Clima.__Clima()
+
+    @classmethod
+    def set_attr(cls, timestamp, latitude=-8.017756, longitude=-34.949524):
+        resposta_json = get_request(
+            "https://api.darksky.net/forecast/8f472164117a0c42dfae9a9902f8d4d9/{},{},{}?units=si"
+                .format(latitude, longitude, timestamp)) \
+            .read()
+        resposta_dict = json.loads(resposta_json)
+        clima_agora = resposta_dict["currently"]
+        temperatura_aparente = clima_agora["apparentTemperature"]
+        temperatura_real = clima_agora["temperature"]
+        velocidade_vento = clima_agora["windSpeed"]
+        if "precipIntensity" in clima_agora.keys():
+            precipitacao = clima_agora["precipIntensity"]
+        else:
+            precipitacao = 0
+        if not Clima.instance:
+            Clima.instance = Clima.__Clima()
+        Clima.instance.temperatura_aparente = temperatura_aparente
+        Clima.instance.temperatura_real = temperatura_real
+        Clima.instance.velocidade_vento = velocidade_vento
+        Clima.instance.precipitacao = precipitacao
+
+    @classmethod
+    def get_clima(cls):
+        if Clima.instance:
+            temperatura_aparente = Clima.instance.temperatura_aparente
+            temperatura_real = Clima.instance.temperatura_real
+            velocidade_vento = Clima.instance.velocidade_vento
+            precipitacao = Clima.instance.precipitacao
+            return temperatura_aparente, temperatura_real, velocidade_vento, precipitacao
+        return None, None, None, None
 
 
 def add_linha_dicionario(linha):
@@ -48,10 +92,12 @@ def add_linha_dicionario(linha):
     elif abs(dicionario_segundos[timestamp][mac]) < abs(rssi):
         dicionario_segundos[timestamp][mac] = rssi
 
+
 def worker(timestamp, dicionario):
     if timestamp in dicionario_segundos.keys():
         sub_dicionario = dicionario_segundos[timestamp]
         list(map(adiciona_dicionario(timestamp, sub_dicionario, dicionario), sub_dicionario.keys()))
+
 
 def adiciona_dicionario(timestamp, sub_dicionario, dicionario):
     def run_adiciona_dicionario(item_mac):
@@ -63,6 +109,7 @@ def adiciona_dicionario(timestamp, sub_dicionario, dicionario):
         else:
             dicionario[mac].atualizar_dicionario(timestamp)
     return run_adiciona_dicionario
+
 
 def vigia_dicionario(timestamp, dicionario, tempo_vida_ativo, tempo_vida_presente = 60):
 
@@ -79,28 +126,15 @@ def vigia_dicionario(timestamp, dicionario, tempo_vida_ativo, tempo_vida_present
 
     return contador
 
-def get_clima(timestamp, latitude = -8.017756, longitude = -34.949524):
-     resposta_json = get_request(
-         "https://api.darksky.net/forecast/8f472164117a0c42dfae9a9902f8d4d9/{},{},{}?units=si"
-     .format(latitude, longitude, timestamp))\
-         .read()
-     resposta_dict = json.loads(resposta_json)
-     clima_agora = resposta_dict["currently"]
-     temperatura_aparente = clima_agora["apparentTemperature"]
-     temperatura_real = clima_agora["temperature"]
-     velocidade_vento = clima_agora["windSpeed"]
-     print("foi")
-
-
-
 
 def criar_cabecalho(coleta, presente, ativo):
     path_arquivo = "..\\Coletas\\coleta "+ str(coleta) +" algoritmo p" + str(presente) + \
               " a" + str(ativo) + ".csv"
 
     arquivo = open(path_arquivo, "a")
-    arquivo.write("segundo,calculo,timestamp,hora_minuto,valor_real" + "\n")
+    arquivo.write("segundo,calculo,timestamp,hora_minuto,valor_real,temp_aparente,precipitacao" + "\n")
     arquivo.close()
+
 
 def get_texto_hora(timestamp):
     time = datetime.datetime.fromtimestamp(timestamp,pytz.UTC)
@@ -109,18 +143,25 @@ def get_texto_hora(timestamp):
     texto_hora = "{}:{}".format(str(hora), str(minuto).rjust(2, "0"))
     return texto_hora
 
+
 def set_valor_real(ultimo_valor, dicionario_valor, texto_hora):
     if (texto_hora in dicionario_valor):
         ultimo_valor = dicionario_valor[texto_hora]
 
-def salvar_em_arquivo(contagem, coleta, presente, ativo, segundo, timestamp,texto_hora, ultimo_valor):
 
+def salvar_em_arquivo(contagem, coleta, presente, ativo, segundo, timestamp,texto_hora, ultimo_valor):
+    if ((segundo % 60 == 0) and segundo != 0):
+        Clima.set_attr(timestamp)
     path_arquivo = "..\\Coletas\\coleta " + str(coleta) + " algoritmo p" + str(presente) + \
                    " a" + str(ativo) + ".csv"
 
     arquivo = open(path_arquivo, "a")
-    arquivo.write("{},{},{},{},{}".format(str(segundo),str(contagem),str(timestamp),texto_hora,ultimo_valor) + "\n")
+    temp_aparente, temp_real, velo_vento, precipitacao = Clima.get_clima()
+
+    arquivo.write("{},{},{},{},{},{},{}".format(segundo,contagem,timestamp,
+                                                texto_hora,ultimo_valor,temp_aparente,precipitacao) + "\n")
     arquivo.close()
+
 
 def add_dicionario_coleta_real(dicionario):
     def run(lista):
@@ -128,10 +169,12 @@ def add_dicionario_coleta_real(dicionario):
     return run
 
 if __name__ == '__main__':
-    coleta = 9
+    Clima()
 
-    tempo_presente = 60
-    tempo_ativo = 180
+    coleta = 6
+
+    tempo_presente = 80
+    tempo_ativo = 90
 
     cur_path = os.path.dirname(__file__)
     path_coleta = os.path.relpath('..\\Coletas\\coleta ' + str(coleta) + '.txt', cur_path)
@@ -150,7 +193,6 @@ if __name__ == '__main__':
     ultimo_valor = linas_splitadas[0][1]
 
     arquivo_coleta = open("..\\Coletas\\coleta {}.txt".format(str(coleta)))
-    # arquivo = open(path_coleta)
     linhas = arquivo_coleta.readlines()
     arquivo_coleta.close()
 
@@ -165,6 +207,8 @@ if __name__ == '__main__':
 
     criar_cabecalho(coleta,tempo_presente,tempo_ativo)
 
+    Clima.set_attr(timestamp_inicial)
+
     while timestamp_atual <= timestamp_final:
         texto_hora = get_texto_hora(timestamp_atual)
         if (texto_hora in dicionario_coleta_real):
@@ -174,6 +218,8 @@ if __name__ == '__main__':
         contador = vigia_dicionario(timestamp_atual,dicionario,tempo_ativo,tempo_presente)
 
         segundo = timestamp_atual - timestamp_inicial
-        salvar_em_arquivo(contador,coleta,tempo_presente,tempo_ativo,segundo,timestamp_atual,texto_hora, ultimo_valor)
+        salvar_em_arquivo(contador, coleta, tempo_presente, tempo_ativo,
+                          segundo, timestamp_atual, texto_hora, ultimo_valor)
         print(str(segundo + 1) + "," + str(contador))
         timestamp_atual += 1
+
