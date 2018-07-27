@@ -1,0 +1,23 @@
+12:24 21 Central 
+12:26 20 biblioteca velha 
+12:27 20 veterinaria
+12:28 20 biblioteca nova
+12:29 23 cegoe
+12:30 23 transrural 
+12:32 11 zootecnia 
+12:33 12 zootecnia 
+12:35 13 zootecnia 
+12:36 13 transrural 
+12:38 13 transrural (rotatoria do cegoe)
+12:39 13 pesca 
+12:41 12 pesca 
+12:42 10 ceagri 
+12:43 11 ceagri 
+12:44 8 ceagri 
+12:45 8 guarita ceagri 
+12:46 8 ceagri
+12:47 8 transrural 
+12:48 8 transrural (atras do cegoe)
+12:50 11 cegoe 
+12:51 12 piscina 
+12:52 9 central

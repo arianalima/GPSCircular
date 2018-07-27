@@ -1,0 +1,18 @@
+08:48 8 guarita ceagri
+08:49 9 ceagri
+08:50 9 transrural 
+08:52 7 cegoe
+08:56 7 central
+08:57 7 biblioteca central
+08:59 7 veterinaria
+09:00 6 biblioteca setorial
+09:00 6 cegoe
+09:01 6 transrural
+09:03 5 zootecnia
+09:05 31 zootecnia
+09:09 35 zootecnia
+09:10 34 transrural
+09:12 32 transrural atras cegoe
+09:13 32 pesca
+09:15 21 ceagri
+09:16 22 ceagri

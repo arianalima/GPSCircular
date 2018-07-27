@@ -1,0 +1,11 @@
+13:27 19 zootecnia
+13:30 21 zootecnia
+13:36 18 pesca
+13:38 16 ceagri
+13:40 15 guarita ceagri
+13:45 15 cegoe
+13:46 13 cegoe
+13:48 34 central
+13:51 32 biblioteca setorial
+13:53 33 cegoe
+13:56 16 zootecnia

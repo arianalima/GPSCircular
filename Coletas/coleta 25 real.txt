@@ -1,0 +1,10 @@
+﻿16:01 central 15
+16:02 biblioteca 13
+16:06 pesca 13
+16:08 ceagri 9
+16:10 guarita_ceagri 10
+16:15 zootecnia 10
+16:16 zootecnia 11
+16:22 cegoe 10
+16:24 cegoe 12
+16:26 central 12

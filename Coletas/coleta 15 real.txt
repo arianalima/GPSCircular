@@ -1,0 +1,33 @@
+10:07 ceagri 17
+10:08 guarita_ceagri 17
+10:09 ceagri 17
+10:10 transrural 17
+10:11 transrural 17
+10:12 transrural 17
+10:13 cegoe 17 (desceu 2 subiu 2)
+10:14 cegoe 17
+10:15 central 17
+10:16 central 17
+10:16 central 8
+10:17 central 12
+10:18 biblioteca 9
+10:19 veterinária 9
+10:20 cegoe 8
+10:21 transrural 8
+10:22 transrural 8
+10:23 transrural 8
+10:24 zootecnia 7 (desceu 2 subiu 1)
+10:25 zootecnia 8
+10:26 zootecnia 8
+10:27 zootecnia 9
+10:28 zootecnia 9
+10:29 zootecnia 9
+10:30 zootecnia 9
+10:31 zootecnia 9
+10:32 zootecnia 9
+10:33 transrural 11
+10:34 transrural 11
+10:35 transrural 11
+10:36 transrural 11
+10:37 pesca 11
+10:38 ceagri 11

@@ -1,0 +1,20 @@
+10:17 26 biblioteca nova
+10:18 26 cegoe
+10:19 26 transrural
+10:21 26 zootecnia 
+10:22 24 zootecnia 
+10:23 27 zootecnia 
+10:26 27 zootecnia 
+10:27 27 transrural 
+10:29 27 transrural rotatoria (1a e 2a)
+10:32 27 pesca
+10:33 26 pesca
+10:34 16 ceagri 
+10:36 18 ceagri 
+10:39 18 guarita ceagri 
+10:40 20 guarita ceagri 
+10:41 26 ceagri 
+10:42 26 transrural 
+10:45 26 cegoe
+10:46 27 piscina 
+10:47 7 central

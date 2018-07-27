@@ -1,0 +1,38 @@
+11:29 35 cegoe
+11:30 35 Piscina
+11:31 16 RU
+11:32 16 Biblioteca Velha (Onibus cheio de gente perto)
+11:33 16 Veterinaria
+11:34 16 Biblioteca Nova
+11:35 14 Cegoe (Cheio de carros ao redor)
+11:36 14 Transrural (Entrada)
+11:37 14 Transrural (Meio)
+11:38 10 Zootecnia
+11:39 12 Zootecnia
+11:40 12 Zootecnia
+11:41 13 Zootecnia
+11:42 13 Zootecnia
+11:43 13 Zootecnia
+11:44 16 Guarita Zootecnia
+11:45 18 Guarita Zootecnia
+11:46 18 Transrural
+11:47 18 Transrural (Meio)
+11:48 18 Transrural
+11:49 18 Pesca
+11:50 18 Pesca (Depois do balao)
+11:51 32 Ceagri
+11:52 32 Ceagri
+11:53 33 Ceagri
+11:54 40 Ceagri
+11:55 40 Portaria Ceagri
+11:56 50 Ceagri (Voltou da portaria)
+11:57 55 Ceagri
+11:58 57 Ceagri
+11:59 57 Transrural
+12:00 57 Transrural
+12:01 57 Educacao
+12:02 58 Prefeitura (Troca de motorista)
+12:03 58 Prefeitura (Troca de motorista)
+12:04 58 Cegoe (2 pessoas desistiram de entrar)
+12:05 58 Portaria Cegoe
+12:06 56 Piscina
