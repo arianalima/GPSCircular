@@ -1,35 +1,40 @@
-14:47 central 20
-14:48 central 21
-14:49 biblioteca 27
-14:50 veterinária 27
-14:52 cegoe 22
-14:54 zootecnia 18
-14:55 zootecnia 20
-14:59 zootecnia 21
-15:01 zootecnia 22
-15:02 zootecnia 23
-15:03 guarita_zootecnia 25
-15:08 pesca 25
-15:09 ceagri 25
-15:10 ceagri 22
-15:13 ceagri 21
-15:15 ceagri 23
-15:16 ceagri 25
-15:19 ceagri 27
-15:20 guarita_central 26
-15:21 ceagri 27
-15:24 transrural 28
-15:25 cegoe 24
-15:26 piscina 20
-15:27 central 20
-
-
-
-
-
-
-
-
-
-
-
+14:47 20 central
+14:48 21 central
+14:49 27 biblioteca
+14:50 27 veterinária
+14:51 27 place holder
+14:52 22 cegoe
+14:53 22 place holder
+14:54 18 zootecnia
+14:55 20 zootecnia
+14:56 20 place holder
+14:57 20 place holder
+14:58 20 place holder
+14:59 21 zootecnia
+15:01 22 zootecnia
+15:02 23 zootecnia
+15:03 25 guarita_zootecnia
+15:04 25 place holder
+15:05 25 place holder
+15:06 25 place holder
+15:07 25 place holder
+15:08 25 pesca
+15:09 25 ceagri
+15:10 22 ceagri
+15:11 22 place holder
+15:12 22 place holder
+15:13 21 ceagri
+15:14 21 place holder
+15:15 23 ceagri
+15:16 25 ceagri
+15:17 25 place holder
+15:18 25 place holder
+15:19 27 ceagri
+15:20 26 guarita_central
+15:21 27 ceagri
+15:22 27 place holder
+15:23 27 place holder
+15:24 28 transrural
+15:25 24 cegoe
+15:26 20 piscina
+15:27 20 central

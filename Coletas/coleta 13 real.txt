@@ -1,16 +1,18 @@
-11:54 25 central
-11:55 24 biblioteca velha
 11:54 20 central
-11:56 24 biblioteca velha 
+11:55 20 place holder
+11:56 24 biblioteca velha
 11:57 24 veterinaria
 11:58 24 biblioteca nova
 11:59 28 cegoe
-12:00 28 prefeitura 
-12:01 27 prefeitura 
-12:02 28 prefeitura 
-12:03 28 transrural 
-12:05 18 zootecnia 
-12:06 18 transrural 
+12:00 28 prefeitura
+12:01 27 prefeitura
+12:02 28 prefeitura
+12:03 28 transrural
+12:04 28 place holder
+12:05 18 zootecnia
+12:06 18 transrural
+12:07 18 place holder
+12:08 18 place holder
 12:09 18 transrural (rotatoria)
 12:10 19 transrural (atras do cegoe)
 12:11 19 pesca
@@ -19,9 +21,11 @@
 12:14 30 ceagri
 12:15 30 guarita ceagri
 12:16 38 ceagri
-12:17 38 transrural 
+12:17 38 transrural
 12:18 38 transrural (atras do cegoe)
+12:19 38 place holder
 12:20 39 cegoe
 12:21 46 cegoe
-12:23 48 piscina 
+12:22 46 place holder
+12:23 48 piscina
 12:24 14 central

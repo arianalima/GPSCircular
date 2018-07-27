@@ -1,20 +1,27 @@
 13:57 16 Zootecnia
+13:58 16 place holder
 13:59 16 transrural
-14:01 16  transrural cegoe
+14:00 16 place holder
+14:01 16 transrural cegoe
 14:02 16 pesca
 14:03 14 pesca
-14:04 06 ceagri
-14:06 05 guarita ceagri
-14:08 05 transtural
-14:10 05 prefeitura
-14:11 07 prefeitura
-14:13 08 cegoe
-14:16 12 central
+14:04 6 ceagri
+14:05 6 place holder
+14:06 5 guarita ceagri
+14:07 5 place holder
+14:08 5 transtural
+14:09 5 place holder
+14:10 5 prefeitura
+14:11 7 prefeitura
+14:12 7 place holder
+14:13 8 cegoe
+14:14 8 place holder
+14:15 8 place holder
 14:16 12 biblioteca central
 14:17 11 veterinaria
 14:18 11 biblioteca setorial
 14:19 11 cegoe
-14:19 10 policia
 14:20 10 prefeitura
+14:21 10 place holder
 14:22 10 transrural
 14:23 8 zootecnia

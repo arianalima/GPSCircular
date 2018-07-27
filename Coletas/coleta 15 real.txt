@@ -8,7 +8,6 @@
 10:14 cegoe 17
 10:15 central 17
 10:16 central 17
-10:16 central 8
 10:17 central 12
 10:18 biblioteca 9
 10:19 veterinária 9

@@ -1,13 +1,20 @@
 10:41 17 guarita ceagri
 10:42 20 guarita ceagri
 10:43 20 guarita ceagri
+10:44 20 place holder
+10:45 20 place holder
 10:46 22 guarita central
 10:47 7 central
+10:48 7 place holder
+10:49 7 place holder
 10:50 8 cegoe
 10:51 8 caminho no meio do mato
+10:52 8 place holder
 10:53 6 zootecnia
 10:54 10 zootecnia
 10:55 11 zootecnia
+10:56 11 place holder
+10:57 11 place holder
 10:58 12 zootecnia guarita
 10:59 12 caminho Mato
 11:01 12 bifurcação no caminho

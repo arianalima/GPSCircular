@@ -1,15 +1,26 @@
-09:18 25 ceagri
-09:19 40 ceagri
-09:21 40 transrural
-09:25 27 cegoe
-09:26 27 piscina
-09:28 4 central
-09:29 9 central
-09:30 9 veterinaria
-09:32 7 cegoe
-09:33 7 transrural
-09:35 7 zootecnia
-09:36 10 zootecnia
-09:40 10 trsnrural atras cegoe
-09:42 10 pesca
-09:44 5 ceagri
+9:18 25 ceagri
+9:19 40 ceagri
+9:21 40 transrural
+9:22 40 place holder
+9:23 40 place holder
+9:24 40 place holder
+9:25 27 cegoe
+9:26 27 piscina
+9:27 27 place holder
+9:28 4 central
+9:29 9 central
+9:30 9 veterinaria
+9:31 9 place holder
+9:32 7 cegoe
+9:33 7 transrural
+9:34 7 place holder
+9:35 7 zootecnia
+9:36 10 zootecnia
+9:37 10 place holder
+9:38 10 place holder
+9:39 10 place holder
+9:40 10 trsnrural atras cegoe
+9:41 10 place holder
+9:42 10 pesca
+9:43 10 place holder
+9:44 5 ceagri

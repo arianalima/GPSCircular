@@ -1,18 +1,30 @@
-08:48 8 guarita ceagri
-08:49 9 ceagri
-08:50 9 transrural 
-08:52 7 cegoe
-08:56 7 central
-08:57 7 biblioteca central
-08:59 7 veterinaria
-09:00 6 biblioteca setorial
-09:00 6 cegoe
-09:01 6 transrural
-09:03 5 zootecnia
-09:05 31 zootecnia
-09:09 35 zootecnia
-09:10 34 transrural
-09:12 32 transrural atras cegoe
-09:13 32 pesca
-09:15 21 ceagri
-09:16 22 ceagri
+8:48 8 guarita ceagri
+8:49 9 ceagri
+8:50 9 transrural
+8:51 9 place holder
+8:52 7 cegoe
+8:53 7 place holder
+8:54 7 place holder
+8:55 7 place holder
+8:56 7 central
+8:57 7 biblioteca central
+8:58 7 place holder
+8:59 7 veterinaria
+9:00 6 biblioteca setorial
+9:00 6 cegoe
+9:01 6 transrural
+9:02 6 place holder
+9:03 5 zootecnia
+9:04 5 place holder
+9:05 31 zootecnia
+9:06 31 place holder
+9:07 31 place holder
+9:08 31 place holder
+9:09 35 zootecnia
+9:10 34 transrural
+9:11 34 place holder
+9:12 32 transrural atras cegoe
+9:13 32 pesca
+9:14 32 place holder
+9:15 21 ceagri
+9:16 22 ceagri

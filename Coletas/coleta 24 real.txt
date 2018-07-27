@@ -1,13 +1,35 @@
-15:28 central 21
-15:29 biblioteca 13
-15:31 veterinária 12
-15:33 cegoe 12
-15:37 zootecnia 12
-15:45 pesca 12
-15:46 ceagri 8
-15:48 ceagri 9
-15:50 ceagri 10
-15:58 cegoe 12
-16:00 central 10
+15:28 21 central
+15:29 13 biblioteca
+15:30 13 place holder
+15:31 12 veterinária
+15:32 12 place holder
+15:33 12 cegoe
+15:34 12 place holder
+15:35 12 place holder
+15:36 12 place holder
+15:37 12 zootecnia
+15:38 12 place holder
+15:39 12 place holder
+15:40 12 place holder
+15:41 12 place holder
+15:42 12 place holder
+15:43 12 place holder
+15:44 12 place holder
+15:45 12 pesca
+15:46 8 ceagri
+15:47 8 place holder
+15:48 9 ceagri
+15:49 9 place holder
+15:50 10 ceagri
+15:51 10 place holder
+15:52 10 place holder
+15:53 10 place holder
+15:54 10 place holder
+15:55 10 place holder
+15:56 10 place holder
+15:57 10 place holder
+15:58 12 cegoe
+15:59 12 place holder
+16:00 10 central
 
 

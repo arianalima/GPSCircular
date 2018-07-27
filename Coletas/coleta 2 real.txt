@@ -1,5 +1,6 @@
 12:17 36 central
 12:18 38 biblioteca
+12:19 38 place holder
 12:20 38 veterinária
 12:21 38 cegoe
 12:22 36 cegoe
@@ -17,6 +18,7 @@
 12:34 51 estrada
 12:35 51 dando a volta na pesca
 12:36 31 ceagri
+12:37 31 place holder
 12:38 31 saindo do ceagri
 12:40 31 indo pra transrural
 12:41 31 estrada

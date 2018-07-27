@@ -16,7 +16,6 @@
 10:46 5 cegoe
 10:47 5 transrural
 10:48 5 transrural
-10:49 4 zootecnia
 10:49 5 zootecnia
 10:50 5 zootecnia
 10:51 5 zootecnia
