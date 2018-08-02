@@ -1,29 +1,32 @@
-12:24 21 Central
-12:25 21 place holder
-12:26 20 biblioteca velha
-12:27 20 veterinaria
-12:28 20 biblioteca nova
-12:29 23 cegoe
-12:30 23 transrural
-12:31 23 place holder
-12:32 11 zootecnia
-12:33 12 zootecnia
-12:34 12 place holder
-12:35 13 zootecnia
-12:36 13 transrural
-12:37 13 place holder
-12:38 13 transrural (rotatoria do cegoe)
-12:39 13 pesca
-12:40 13 place holder
-12:41 12 pesca
-12:42 10 ceagri
-12:43 11 ceagri
-12:44 8 ceagri
-12:45 8 guarita ceagri
-12:46 8 ceagri
-12:47 8 transrural
-12:48 8 transrural (atras do cegoe)
-12:49 8 place holder
-12:50 11 cegoe
-12:51 12 piscina
-12:52 9 central
+10:07 ceagri 17
+10:08 guarita_ceagri 17
+10:09 ceagri 17
+10:10 transrural 17
+10:11 transrural 17
+10:12 transrural 17
+10:13 cegoe 17 (desceu 2 subiu 2)
+10:14 cegoe 17
+10:15 central 17
+10:16 central 17
+10:17 central 12
+10:18 biblioteca 9
+10:19 veterinária 9
+10:20 cegoe 8
+10:21 transrural 8
+10:22 transrural 8
+10:23 transrural 8
+10:24 zootecnia 7 (desceu 2 subiu 1)
+10:25 zootecnia 8
+10:26 zootecnia 8
+10:27 zootecnia 9
+10:28 zootecnia 9
+10:29 zootecnia 9
+10:30 zootecnia 9
+10:31 zootecnia 9
+10:32 zootecnia 9
+10:33 transrural 11
+10:34 transrural 11
+10:35 transrural 11
+10:36 transrural 11
+10:37 pesca 11
+10:38 ceagri 11

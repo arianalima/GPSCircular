@@ -1,28 +1,30 @@
-9:48 6 zootecnia
-9:49 6 place holder
-9:50 6 place holder
-9:51 6 place holder
-9:52 6 transrural
-9:53 6 place holder
-9:54 6 place holder
-9:55 6 transrural atrás do cegoe
-9:56 6 place holder
-9:57 6 pesca
-9:58 6 place holder
-9:59 17 ceagri 
-10:00 17 guarita ceagri
-10:01 17 ceagri
-10:02 17 transrural 
-10:03 17 transrural atrás cegoe
-10:04 17 place holder
-10:05 18 cegoe
-10:06 18 piscina 
-10:07 5 central
-10:08 5 biblioteca velha
-10:09 5 place holder
-10:10 5 veterinária
-10:11 5 cegoe
-10:12 5 transrural
-10:13 5 place holder
-10:14 5 zootecnia
-10:15 5 zootecnia
+8:48 8 guarita ceagri
+8:49 9 ceagri
+8:50 9 transrural
+8:51 9 place holder
+8:52 7 cegoe
+8:53 7 place holder
+8:54 7 place holder
+8:55 7 place holder
+8:56 7 central
+8:57 7 biblioteca central
+8:58 7 place holder
+8:59 7 veterinaria
+9:00 6 biblioteca setorial
+9:00 6 cegoe
+9:01 6 transrural
+9:02 6 place holder
+9:03 5 zootecnia
+9:04 5 place holder
+9:05 31 zootecnia
+9:06 31 place holder
+9:07 31 place holder
+9:08 31 place holder
+9:09 35 zootecnia
+9:10 34 transrural
+9:11 34 place holder
+9:12 32 transrural atras cegoe
+9:13 32 pesca
+9:14 32 place holder
+9:15 21 ceagri
+9:16 22 ceagri

@@ -1,33 +1,26 @@
-15:28 21 central
-15:29 13 biblioteca
-15:30 13 place holder
-15:31 12 veterinária
-15:32 12 place holder
-15:33 12 cegoe
-15:34 12 place holder
-15:35 12 place holder
-15:36 12 place holder
-15:37 12 zootecnia
-15:38 12 place holder
-15:39 12 place holder
-15:40 12 place holder
-15:41 12 place holder
-15:42 12 place holder
-15:43 12 place holder
-15:44 12 place holder
-15:45 12 pesca
-15:46 8 ceagri
-15:47 8 place holder
-15:48 9 ceagri
-15:49 9 place holder
-15:50 10 ceagri
-15:51 10 place holder
-15:52 10 place holder
-15:53 10 place holder
-15:54 10 place holder
-15:55 10 place holder
-15:56 10 place holder
-15:57 10 place holder
-15:58 12 cegoe
-15:59 12 place holder
-16:00 10 central
+﻿16:01 15 central
+16:02 13 biblioteca
+16:03 13 place hold
+16:04 13 place hold
+16:05 13 place hold
+16:06 13 pesca
+16:07 13 place hold
+16:08 9 ceagri
+16:09 9 place hold
+16:10 10 guarita_ceagri
+16:11 10 place hold
+16:12 10 place hold
+16:13 10 place hold
+16:14 10 place hold
+16:15 10 zootecnia
+16:16 11 zootecnia
+16:17 11 place hold
+16:18 11 place hold
+16:19 11 place hold
+16:20 11 place hold
+16:21 11 place hold
+16:22 10 cegoe
+16:23 10 place hold
+16:24 12 cegoe
+16:25 12 place hold
+16:26 12 central
