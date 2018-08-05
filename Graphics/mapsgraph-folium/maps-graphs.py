@@ -3,38 +3,62 @@
 import folium
 from folium.plugins import HeatMap
 import pandas as pd
+import branca.colormap as cm
 
 coletas = pd.read_csv('coletas_reais.csv', header=[0])
+coletas['lat'] = coletas['lat'].astype(float)
+coletas['long'] = coletas['long'].astype(float)
+coletas['media'] = coletas['media'].astype(int)
 
 mapa = folium.Map(location=[-8.0169, -34.94844], zoom_start=15)
 mapa_calor = folium.Map(location=[-8.0169, -34.94844], zoom_start=15)
 
-coletas['lat'] = coletas['lat'].astype(float)
-coletas['long'] = coletas['long'].astype(float)
-coletas['media'] = coletas['media'].astype(float)
+mapa.raster_layers.TileLayer(
+    tiles='http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
+    attr='google',
+    name='Google Maps - Terreno',
+    max_zoom=20,
+    subdomains=['mt0', 'mt1', 'mt2', 'mt3'],
+    overlay=False,
+    control=True,
+).add_to(m)
+
+mapa.raster_layers.TileLayer(
+    tiles='http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
+    attr='google',
+    name='Google Maps - Satelite',
+    max_zoom=20,
+    subdomains=['mt0', 'mt1', 'mt2', 'mt3'],
+    overlay=False,
+    control=True,
+).add_to(m)
+
+folium.LayerControl().add_to(mapa)
 
 ## Mapa de calor
 calor = coletas[['lat', 'long', 'media']].values.tolist()
 HeatMap(calor, radius=15).add_to(mapa_calor)    
 
-## Verifica a media e retorna uma cor correspondente
-def colorir(media):
-    if media in list(range(0,15)):
-        return 'blue'
-    elif media in list(range(15,20)):
-        return 'yellow'
-    else:
-        return 'red'
-    
+## Cores dos marcadores
+cor = cm.linear.YlOrRd_07.scale(0, 35)
+cor = cor.to_step(
+    n = 5,
+    data = list(coletas['media']),
+    method = 'quantiles',
+    round_method = 'int'
+)
+cor.caption = 'Quantidade média de pessoas por parada'
+mapa.add_child(cor)
+
 ##  Cria as bolhas no mapa
 def marcar(parada, media, lat, long):
         folium.CircleMarker(
             location = [lat, long],
             popup = "<b>" + parada + "</b><br/>" + "media: " + str(media),
             fill = True,
-            fill_opacity=0.4,
-            color = colorir(media),
-            fill_color = colorir(media),
+            fill_opacity = 0.4,
+            fill_color = cor(media),
+            color = cor(media),
             radius = media
         ).add_to(mapa)
 
