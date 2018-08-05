@@ -3,6 +3,8 @@ import pytz
 import datetime
 from urllib.request import urlopen as get_request
 import json
+import sys
+sys.setrecursionlimit(10000)
 
 PRESENTE = "p"
 ATIVO = "a"
@@ -48,6 +50,10 @@ class Clima:
 
     @classmethod
     def set_attr(cls, timestamp, latitude=-8.017756, longitude=-34.949524):
+        # resposta_json = get_request(
+        #     "https://api.darksky.net/forecast/ddadf93bf02a161666ab533689a0ffbf/{},{},{}?units=si"
+        #         .format(latitude, longitude, timestamp)) \
+        #     .read()
         resposta_json = get_request(
             "https://api.darksky.net/forecast/8f472164117a0c42dfae9a9902f8d4d9/{},{},{}?units=si"
                 .format(latitude, longitude, timestamp)) \
@@ -168,12 +174,29 @@ def add_dicionario_coleta_real(dicionario):
         dicionario[lista[0]] = lista[1]
     return run
 
+def run_on_timestamps(timestamp_atual, ultimo_valor):
+    if timestamp_atual > timestamp_final:
+        return
+    texto_hora = get_texto_hora(timestamp_atual)
+    new_ultimo_valor = ultimo_valor
+    if (texto_hora in dicionario_coleta_real):
+        new_ultimo_valor = dicionario_coleta_real[texto_hora]
+
+    worker(timestamp_atual, dicionario)
+    contador = vigia_dicionario(timestamp_atual, dicionario, tempo_ativo, tempo_presente)
+
+    segundo = timestamp_atual - timestamp_inicial
+    salvar_em_arquivo(contador, coleta, tempo_presente, tempo_ativo,
+                      segundo, timestamp_atual, texto_hora, new_ultimo_valor)
+    print(str(segundo + 1) + "," + str(contador))
+    run_on_timestamps(timestamp_atual + 1, new_ultimo_valor)
+
 if __name__ == '__main__':
     Clima()
 
-    coleta = 6
+    coleta = 1
 
-    tempo_presente = 80
+    tempo_presente = 60
     tempo_ativo = 90
 
     cur_path = os.path.dirname(__file__)
@@ -187,7 +210,7 @@ if __name__ == '__main__':
     linhas = arquivo_coleta_real.readlines()
     arquivo_coleta_real.close()
 
-    linas_splitadas = list(map(lambda x: x.split(),linhas))
+    linas_splitadas = list(map(lambda x: x.split(" ",2),linhas))
     list(map(add_dicionario_coleta_real(dicionario_coleta_real),linas_splitadas))
 
     ultimo_valor = linas_splitadas[0][1]
@@ -209,17 +232,4 @@ if __name__ == '__main__':
 
     Clima.set_attr(timestamp_inicial)
 
-    while timestamp_atual <= timestamp_final:
-        texto_hora = get_texto_hora(timestamp_atual)
-        if (texto_hora in dicionario_coleta_real):
-            ultimo_valor = dicionario_coleta_real[texto_hora]
-
-        worker(timestamp_atual,dicionario)
-        contador = vigia_dicionario(timestamp_atual,dicionario,tempo_ativo,tempo_presente)
-
-        segundo = timestamp_atual - timestamp_inicial
-        salvar_em_arquivo(contador, coleta, tempo_presente, tempo_ativo,
-                          segundo, timestamp_atual, texto_hora, ultimo_valor)
-        print(str(segundo + 1) + "," + str(contador))
-        timestamp_atual += 1
-
+    run_on_timestamps(timestamp_atual,ultimo_valor)
