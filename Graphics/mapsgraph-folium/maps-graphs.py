@@ -13,28 +13,6 @@ coletas['media'] = coletas['media'].astype(int)
 mapa = folium.Map(location=[-8.0169, -34.94844], zoom_start=15)
 mapa_calor = folium.Map(location=[-8.0169, -34.94844], zoom_start=15)
 
-mapa.raster_layers.TileLayer(
-    tiles='http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
-    attr='google',
-    name='Google Maps - Terreno',
-    max_zoom=20,
-    subdomains=['mt0', 'mt1', 'mt2', 'mt3'],
-    overlay=False,
-    control=True,
-).add_to(m)
-
-mapa.raster_layers.TileLayer(
-    tiles='http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
-    attr='google',
-    name='Google Maps - Satelite',
-    max_zoom=20,
-    subdomains=['mt0', 'mt1', 'mt2', 'mt3'],
-    overlay=False,
-    control=True,
-).add_to(m)
-
-folium.LayerControl().add_to(mapa)
-
 ## Mapa de calor
 calor = coletas[['lat', 'long', 'media']].values.tolist()
 HeatMap(calor, radius=15).add_to(mapa_calor)    
