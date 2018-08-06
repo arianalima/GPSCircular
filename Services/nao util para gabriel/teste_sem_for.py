@@ -1,7 +1,10 @@
 import os
-collect = 1
-time_present = 80
-time_active = 90
+from functools import reduce
+
+
+collect = 19
+present_parameter = 80
+active_parameter = 90
 
 cur_path = os.path.dirname(__file__)
 collect_path = os.path.relpath('..\\Coletas\\coleta ' + str(collect) + '.txt', cur_path)
@@ -16,7 +19,7 @@ first_timestamp = int(first_line_list[2])
 last_line_list = collect_list[-1].split()
 last_timestamp = int(last_line_list[2])
 
-timestamp_range = range(first_timestamp,last_timestamp+1)
+TIMESTAMP_RANGE = range(first_timestamp, last_timestamp + 1)
 
 unique_macs = []
 
@@ -43,44 +46,72 @@ def get_mac_timestamps(collect_list, unique_macs):
 
 list(map(get_mac_timestamps(collect_list, unique_macs),range(len(unique_macs))))
 
-# list_timestamp_collect = list(map(lambda x:[], timestamp_range))
-
-def naosei_onome_():
-    pass
-
-
-def a():
+def get_mac_activity_collection(timestamp_range, present, active, first_timestamp):
     lista = []
     for i in unique_macs:
-        mac = i[0]
         timestamps = i[1:]
-        list_timestamp_collect = list(map(lambda x:[], timestamp_range))
+        list_timestamp_collect = list(map(lambda x:0, timestamp_range))
         status = False
         last_active_stamp = timestamps[0]
         last_present_stamp = timestamps[0]
         for k in timestamps:
-            present_time = last_present_stamp + time_present
-            active_time = last_active_stamp + time_active
+            present_time = last_present_stamp + present
+            active_time = last_active_stamp + active
             last_active_stamp = k
             if status == True:
                 if k > active_time:
                     status = False
                     last_present_stamp = k
                 else:
-                    first_index = present_time - first_timestamp
-                    last_index = k - first_timestamp + 1
-                    value_list = list(map(lambda x: [1],range(first_index, last_index)))
+                    #todo verificar isso aqui
+                    first_index = k - first_timestamp
+                    last_index = active_time - first_timestamp + 1
+                    value_list = list(map(lambda x: 1,range(first_index, last_index)))
                     list_timestamp_collect[first_index:last_index] = value_list
-            elif k < present_time:
+            elif k <= present_time:
                 continue
-            elif k > present_time and k < active_time:
+            elif k > present_time and k <= active_time:
                 status = True
+                #todo verificar isso aqui
+                first_index = k - first_timestamp
+                last_index = active_time - first_timestamp + 1
+                value_list = list(map(lambda x: 1, range(first_index, last_index)))
+                list_timestamp_collect[first_index:last_index] = value_list
             else:
                 last_present_stamp = k
         lista.append(list_timestamp_collect)
     return lista
 
-lista = a()
+
+lista = get_mac_activity_collection(TIMESTAMP_RANGE, present_parameter, active_parameter, first_timestamp)
+
+
+#---------------------------------------------------------------------------------------------------
+
+def sum_elements(element_a, element_b):
+    a = element_a
+    b = element_b
+    return a + b
+
+for j in range(len(lista) - 1):
+    for i in range(len(TIMESTAMP_RANGE)):
+        a = lista[j][i]
+        b = lista[j+1][i]
+        lista[j + 1][i] = sum_elements(a,b)
+
+# lista = list(map(a(timestamp_range, present_parameter, active_parameter, first_timestamp),unique_macs))
+
+def reduce_stamps_collection(list_a, list_b):
+    result_list = list(map(lambda x: sum_elements(list_a[x],list_b[x]),range(len(TIMESTAMP_RANGE))))
+    return result_list
+
+crowd_density = lista[-1]
+
+
+# bb = list(reduce(reduce_stamps_collection,lista))
+
+
+
 print("a")
 
 # list(map(naosei_onome_,unique_macs))

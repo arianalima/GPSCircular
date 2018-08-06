@@ -161,6 +161,8 @@ def salvar_em_arquivo(contagem, coleta, presente, ativo, segundo, timestamp,text
     path_arquivo = "..\\Coletas\\coleta " + str(coleta) + " algoritmo p" + str(presente) + \
                    " a" + str(ativo) + ".csv"
 
+    # if segundo > presente:
+    # segundo_80 = segundo - 80
     arquivo = open(path_arquivo, "a")
     temp_aparente, temp_real, velo_vento, precipitacao = Clima.get_clima()
 
@@ -194,10 +196,10 @@ def run_on_timestamps(timestamp_atual, ultimo_valor):
 if __name__ == '__main__':
     Clima()
 
-    coleta = 1
+    coleta = 25
 
     tempo_presente = 60
-    tempo_ativo = 90
+    tempo_ativo = 180
 
     cur_path = os.path.dirname(__file__)
     path_coleta = os.path.relpath('..\\Coletas\\coleta ' + str(coleta) + '.txt', cur_path)
