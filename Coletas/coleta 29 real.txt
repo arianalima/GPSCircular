@@ -1,0 +1,21 @@
+14:44 13 cegoe
+14:47 10 zootecnia
+14:48 14 zootecnia
+14:49 17 zootecnia
+14:50 18 guarita zootecnia
+14:55 18 cegoe
+14:56 16 piscina
+14:58 27 central
+14:59 26 biblioteca velha
+15:00 26 veterinaria 
+15:01 26 biblioteca nova 
+15:05 26 pesca
+15:06 12 ceagri
+15:07 19 ceagri
+15:09 18 guarita ceagri
+15:12 17 transrural
+15:13 15 zootecnia
+15:16 16 zootecnia
+15:17 19 zootecnia
+15:18 20 guarita zootecnia
+15:23 11 cegoe
