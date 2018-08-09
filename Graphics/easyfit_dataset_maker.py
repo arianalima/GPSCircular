@@ -1,5 +1,4 @@
 import pandas as pd
-import time
 import datetime
 import pytz
 
@@ -13,7 +12,7 @@ range_coletas = range(primeira_coleta,ultima_coleta + 1)
 def get_menor_time_stamp(p,a):
     def get_menor(coleta):
         csv_name = "coleta {} algoritmo p{} a{}.csv".format(coleta, p, a)
-        arquivo = open("..\\Coletas\\" + csv_name)
+        arquivo = open("..\\Coletas\\csv's\\" + csv_name)
         linhas = arquivo.readlines()
         linha_timestamp = linhas[1].split(",")
         menor_ts = linha_timestamp[2]
@@ -28,7 +27,7 @@ def coleta_to_dtframe(p, a, menor_tempo):
 
     def get_dt(coleta):
         csv_name = "coleta {} algoritmo p{} a{}.csv".format(coleta,p,a)
-        dtframe = pd.read_csv("..\\Coletas\\" + csv_name)
+        dtframe = pd.read_csv("..\\Coletas\\csv's\\" + csv_name)
         dtframe_return = pd.DataFrame({})
         dtframe_return["timestamp"] = dtframe["timestamp"].apply(subtrair_tempo_inicial,args=(menor_tempo,))
         dtframe_return["calculo"] = dtframe["calculo"].map(int)

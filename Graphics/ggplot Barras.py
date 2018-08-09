@@ -9,7 +9,7 @@ tempoAtivo = 90
 minutos = []
 
 def list_minutos(coleta):
-    arquivo = open("..\\Coletas\\coleta " + str(coleta) + " algoritmo p" + str(tempoPresente) + \
+    arquivo = open("..\\Coletas\\csv's\\coleta " + str(coleta) + " algoritmo p" + str(tempoPresente) + \
                    " a" + str(tempoAtivo) + ".csv")
 
     segundos = arquivo.read().split()[-1]\

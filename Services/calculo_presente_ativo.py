@@ -134,7 +134,7 @@ def vigia_dicionario(timestamp, dicionario, tempo_vida_ativo, tempo_vida_present
 
 
 def criar_cabecalho(coleta, presente, ativo):
-    path_arquivo = "..\\Coletas\\coleta "+ str(coleta) +" algoritmo p" + str(presente) + \
+    path_arquivo = "..\\Coletas\\csv's\\coleta "+ str(coleta) +" algoritmo p" + str(presente) + \
               " a" + str(ativo) + ".csv"
 
     arquivo = open(path_arquivo, "a")
@@ -158,7 +158,7 @@ def set_valor_real(ultimo_valor, dicionario_valor, texto_hora):
 def salvar_em_arquivo(contagem, coleta, presente, ativo, segundo, timestamp,texto_hora, ultimo_valor):
     if ((segundo % 60 == 0) and segundo != 0):
         Clima.set_attr(timestamp)
-    path_arquivo = "..\\Coletas\\coleta " + str(coleta) + " algoritmo p" + str(presente) + \
+    path_arquivo = "..\\Coletas\\csv's\\coleta " + str(coleta) + " algoritmo p" + str(presente) + \
                    " a" + str(ativo) + ".csv"
 
     # if segundo > presente:

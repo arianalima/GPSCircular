@@ -1,12 +1,12 @@
 import pandas as pd
 from ggplot import *
 
-df1 = pd.read_csv("..\\Coletas\\coleta 1 algoritmo p80 a90.csv")
-df2 = pd.read_csv("..\\Coletas\\coleta 1 algoritmo p80 a150.csv")
-df3 = pd.read_csv("..\\Coletas\\coleta 1 algoritmo p80 a180.csv")
-df4 = pd.read_csv("..\\Coletas\\coleta 1 algoritmo p60 a90.csv")
-df5 = pd.read_csv("..\\Coletas\\coleta 1 algoritmo p60 a150.csv")
-df6 = pd.read_csv("..\\Coletas\\coleta 1 algoritmo p60 a180.csv")
+df1 = pd.read_csv("..\\Coletas\\csv's\\coleta 1 algoritmo p80 a90.csv")
+df2 = pd.read_csv("..\\Coletas\\csv's\\coleta 1 algoritmo p80 a150.csv")
+df3 = pd.read_csv("..\\Coletas\\csv's\\coleta 1 algoritmo p80 a180.csv")
+df4 = pd.read_csv("..\\Coletas\\csv's\\coleta 1 algoritmo p60 a90.csv")
+df5 = pd.read_csv("..\\Coletas\\csv's\\coleta 1 algoritmo p60 a150.csv")
+df6 = pd.read_csv("..\\Coletas\\csv's\\coleta 1 algoritmo p60 a180.csv")
 
 newdf = pd.DataFrame({})
 

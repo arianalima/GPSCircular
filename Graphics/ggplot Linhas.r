@@ -2,7 +2,7 @@ library("ggplot2")
 
 coleta <- "7"
 
-csv_folder <- "C:\\Users\\Bernardo\\Desktop\\Projetos\\Python\\GPSCircular\\Coletas\\coleta "
+csv_folder <- "..\\Coletas\\csv's\\coleta "
 
 df1 <- read.csv(file= paste(csv_folder, coleta, " algoritmo p60 a90.csv", sep=""), header = TRUE)
 df2 <- read.csv(file= paste(csv_folder, coleta, " algoritmo p60 a150.csv", sep=""), header = TRUE)
@@ -25,7 +25,7 @@ gg <- ggplot(df1, aes(x=df1$segundo)) +
   geom_line(aes(y = df1$calculo1_80_90, colour = "calculo1_80_90"))+
   geom_line(aes(y = df1$calculo1_80_150, colour = "calculo1_80_150"))+
   geom_line(aes(y = df1$calculo1_80_180, colour = "calculo1_80_180"))+
-  labs(x="Segundos",y="Lotação",colour = "Valores")
+  labs(x="Segundos",y="Lotaï¿½ï¿½o",colour = "Valores")
 plot(gg)
 
 
@@ -36,7 +36,7 @@ gg2 <- ggplot(df1, aes(x=segundo)) +
   geom_line(aes(y = calculo1_80_90, color = "calculo1_80_90")) +
   geom_line(aes(y = valor_real, color = "valor_real")) +
   geom_smooth(aes(y = valor_real), method = "lm", formula = x ~ y family = gaussian(link = 'log')) +
-  labs(x="Segundos",y="Lotação",colour = "Valores")
+  labs(x="Segundos",y="Lotaï¿½ï¿½o",colour = "Valores")
 plot(gg2)
 
 gg <- ggplot(df1, aes(x=segundo)) +
