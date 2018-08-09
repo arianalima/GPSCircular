@@ -9,30 +9,28 @@ data_frames = []
 
 
 def create_df(lista, coleta):
-    try:
-        arq = open("../Coletas/coleta {} real.txt".format(coleta), "r")
-        tempo = arq.readlines()
-        dado = []
-        data = []
+    arq = open("../Coletas/coleta {} real.txt".format(coleta), "r")
+    tempo = arq.readlines()
+    dado = []
+    data = []
 
-        def get_dados(linha):
-            linha = linha.split()
-            data.append(linha[0])
-            dado.append(int(linha[1]))
-        list(map(lambda x: get_dados(x), tempo))
+    def get_dados(linha):
+        linha = linha.split()
+        data.append(linha[0])
+        dado.append(int(linha[1]))
+    list(map(lambda x: get_dados(x), tempo))
 
-        def reformat(indice):
-            data[indice] = float(data[indice].replace(":", "."))
+    def reformat(indice):
+        data[indice] = float(data[indice].replace(":", "."))
 
-        list(map(lambda x: reformat(x), range(len(data))))
+    list(map(lambda x: reformat(x), range(len(data))))
 
-        dic = {"coleta {}".format(coleta): dado, "hora": data}
-        df = pd.DataFrame(dic)
-        df = df.set_index("hora")
-        data_frames.append(df)
-        arq.close()
-    except:
-        pass
+    dic = {"coleta {}".format(coleta): dado, "hora": data}
+    df = pd.DataFrame(dic)
+    df = df.set_index("hora")
+    data_frames.append(df)
+    arq.close()
+    
 
 list(map(lambda x : create_df(data_frames,x), range(1,numero_coletas)))
 # print(data_frames)
