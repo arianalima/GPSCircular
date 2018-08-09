@@ -1,7 +1,6 @@
-QTD_COLETAS = 29
+QTD_COLETAS = 30
 
 def clean(coleta):
-    print(coleta)
     f = open("coleta %s.txt"%coleta,"r")
     a = f.read().split()
     a = list(map(lambda x: x.replace("\n",""),a))

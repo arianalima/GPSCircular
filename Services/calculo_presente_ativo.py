@@ -196,9 +196,9 @@ def run_on_timestamps(timestamp_atual, ultimo_valor):
 if __name__ == '__main__':
     Clima()
 
-    coleta = 25
+    coleta = 30
 
-    tempo_presente = 60
+    tempo_presente = 80
     tempo_ativo = 180
 
     cur_path = os.path.dirname(__file__)
