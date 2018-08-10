@@ -1,5 +1,5 @@
 10:17 7 central
-10:18 veterinaria 6
+10:18 6 veterinaria
 10:19 8 bivlioteca setorial
 10:20 8 cegoe
 10:20 7 transrural
