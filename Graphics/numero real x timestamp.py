@@ -9,7 +9,7 @@ tempoAtivo = 90
 # minutos = []
 
 def formatar(numero, lista):
-    arquivo = open("..\\Coletas\\coleta\\csv's " + str(numero) + " algoritmo p" + str(tempoPresente) + \
+    arquivo = open("..\\Coletas\\csv's\\coleta " + str(numero) + " algoritmo p" + str(tempoPresente) + \
                    " a" + str(tempoAtivo) + ".csv")
 
     segundos = arquivo.readlines()

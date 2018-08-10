@@ -1,8 +1,9 @@
 from datetime import timedelta, datetime
 from csv import reader
-QTD_COLETAS = 25
+QTD_COLETAS = 30
 TEMPO_PRESENTE = 80
 TEMPO_ATIVO = 90
+resultados = []
 
 f = open('df_coletas.arff','w')
 f.write("@relation df_coletas\n\n"
@@ -21,11 +22,11 @@ def getWeekDay(timestamp):
     return str(datetime.fromtimestamp(int(timestamp)).weekday())
 
 def getClassification(lotacao_real):
-    if lotacao_real > 33:
+    if lotacao_real > 43:
         return "superlotado"
-    elif 33 >= lotacao_real >= 23:
+    elif 43 >= lotacao_real >= 33:
         return "lotado"
-    elif 23 > lotacao_real >= 13:
+    elif 33 > lotacao_real >= 23:
         return "normal"
     else:
         return "vazio"
@@ -44,14 +45,41 @@ def read(coleta):
         list(map(lambda index:
                  changeTsSecsTotal(index, getSecsTotal(data[index][2]), data), range(len(data))))
         data = list(filter(lambda line: line[1]!='0', data))
-
         list(map(lambda line: f.write(str(coleta)+",")
                               and list(map(lambda var: f.write(var+","), line))
                               and f.write(getClassification(int(line[4])))
-                              and f.write("\n"),data))
+                              and f.write("\n")
+                              and resultados.append((coleta,getClassification(int(line[4])),getClassification(int(line[1])))),data))
+
+
 
         file.close()
 
 list(map(lambda x: read(x),range(1,QTD_COLETAS+1)))
 
 f.close()
+
+def countError(classe):
+    expected = sum(map(lambda tuple: tuple[1].count(classe), resultados))
+    reality = sum(map(lambda tuple: tuple[2].count(classe), resultados))
+    print(expected,reality)
+    return expected-reality
+
+
+print(resultados)
+total = len(resultados)
+vazio = countError('vazio')
+normal = countError('normal')
+lotado = countError('lotado')
+superlotado = countError('superlotado')
+
+print("total:",total)
+print("vazio:", vazio)
+print("normal:", normal)
+print("lotado:", lotado)
+print("superlotado:", superlotado)
+
+# if resultado <= 0:
+#     print(resultado, "erros")
+# elif resultado >0:
+#     print(lotado_r-lotado_e,"erros")
