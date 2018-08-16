@@ -5,7 +5,7 @@ TEMPO_PRESENTE = 80
 TEMPO_ATIVO = 90
 resultados = []
 
-f = open('df_coletas.arff','w')
+f = open('df_coletas_p{}a{}.arff'.format(TEMPO_PRESENTE,TEMPO_ATIVO),'w')
 f.write("@relation df_coletas\n\n"
         "@attribute coleta integer\n"
         "@attribute segundo_coleta integer\n"
@@ -44,15 +44,12 @@ def read(coleta):
         header = data.pop(0)
         list(map(lambda index:
                  changeTsSecsTotal(index, getSecsTotal(data[index][2]), data), range(len(data))))
-        data = list(filter(lambda line: line[1]!='0', data))
+        data = data[TEMPO_PRESENTE + 1:]
         list(map(lambda line: f.write(str(coleta)+",")
                               and list(map(lambda var: f.write(var+","), line))
                               and f.write(getClassification(int(line[4])))
                               and f.write("\n")
                               and resultados.append((coleta,getClassification(int(line[4])),getClassification(int(line[1])))),data))
-
-
-
         file.close()
 
 list(map(lambda x: read(x),range(1,QTD_COLETAS+1)))
@@ -62,24 +59,11 @@ f.close()
 def countError(classe):
     expected = sum(map(lambda tuple: tuple[1].count(classe), resultados))
     reality = sum(map(lambda tuple: tuple[2].count(classe), resultados))
-    print(expected,reality)
     return expected-reality
 
 
-print(resultados)
 total = len(resultados)
 vazio = countError('vazio')
 normal = countError('normal')
 lotado = countError('lotado')
 superlotado = countError('superlotado')
-
-print("total:",total)
-print("vazio:", vazio)
-print("normal:", normal)
-print("lotado:", lotado)
-print("superlotado:", superlotado)
-
-# if resultado <= 0:
-#     print(resultado, "erros")
-# elif resultado >0:
-#     print(lotado_r-lotado_e,"erros")

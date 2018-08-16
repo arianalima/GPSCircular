@@ -1,6 +1,6 @@
 library("ggplot2")
 
-coleta <- "26"
+coleta <- "30"
 
 csv_folder <- "C:\\Users\\Bernardo\\Desktop\\Projetos\\Python\\GPSCircular\\Coletas\\csv's\\coleta "
 
@@ -25,29 +25,5 @@ gg <- ggplot(df1, aes(x=df1$segundo)) +
   geom_line(aes(y = df1$calculo1_80_90, colour = "calculo1_80_90"))+
   geom_line(aes(y = df1$calculo1_80_150, colour = "calculo1_80_150"))+
   geom_line(aes(y = df1$calculo1_80_180, colour = "calculo1_80_180"))+
-  labs(x="Segundos",y="Lotação",colour = "Valores")
-plot(gg)
-
-
-desvio_padrao = sd(df1$calculo1_80_90)
-
-gg2 <- ggplot(df1, aes(x=df1%segundo)) +
-  #  geom_ribbon(aes(ymin=calculo1_80_90 - desvio_padrao,ymax=calculo1_80_90 + desvio_padrao),fill="grey70") + 
-  geom_line(aes(y = df1%calculo1_80_90, color = "calculo1_80_90")) +
-  geom_line(aes(y = df1%valor_real, color = "valor_real")) +
-  geom_smooth(aes(y = df1%valor_real), method = "lm", formula = x ~ y family = gaussian(link = 'log')) +
-  labs(x="Segundos",y="Lotação",colour = "Valores")
-plot(gg2)
-
-gg <- ggplot(df1, aes(x=segundo)) +
-  geom_line(aes(y = valor_real, colour = "valor_real")) +
-  #geom_line(aes(y = calculo1_60_150, colour = "calculo1_60_90"))+
-  #geom_line(aes(y = calculo1_60_150, colour = "calculo1_60_150"))+
-  #geom_line(aes(y = calculo1_60_180, colour = "calculo1_60_180"))+
-  geom_line(aes(y = calculo1_80_90, colour = "calculo_80_90"))+
-  #geom_line(aes(y = calculo1_80_150, colour = "calculo1_80_150"))+
-  #geom_line(aes(y = calculo1_80_180, colour = "calculo1_80_180"))+
-  stat_smooth(aes(y = calculo1_80_90), method = "lm", formula = y ~ x, size = 1, level = 0.95)
-  #stat_smooth(aes(y = calculo1_80_90, colour = "algoritmo1"), method="lm", formula = y ~ splines::bs(x, 3), se = FALSE, size = 1)
-  #geom_ribbon(aes(ymin=calculo1_80_90 - desvio_padrao,ymax=calculo1_80_90 + desvio_padrao),fill="grey70")
+  labs(x="Segundos",y="Lotaï¿½ï¿½o",colour = "Valores")
 plot(gg)
